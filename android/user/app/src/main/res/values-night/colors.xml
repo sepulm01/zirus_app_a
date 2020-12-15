@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primaryColor">#1565c0</color>
+    <color name="primaryColorDark">#003c8f</color>
+    <color name="primaryColorLight">#5e92f3</color>
+
+    <color name="secondaryColor">#27bf0b</color>
+    <color name="secondaryColorDark">#008d00</color>
+    <color name="secondaryColorLight">#6bf34c</color>
+
+    <color name="text_dark_primary">#FAFAFA</color>
+    <color name="text_primary">#EEEEEE</color>
+    <color name="text_light_primary">#E0E0E0</color>
+    <color name="text_dark_secondary">#212121</color>
+    <color name="text_secondary">#424242</color>
+    <color name="text_light_secondary">#757575</color>
+
+    <color name="icon_dark_primary">#FAFAFA</color>
+    <color name="icon_primary">#EEEEEE</color>
+    <color name="icon_light_primary">#E0E0E0</color>
+    <color name="icon_dark_secondary">#212121</color>
+    <color name="icon_secondary">#424242</color>
+    <color name="icon_light_secondary">#757575</color>
+
+    <color name="window_background_color">#212121</color>
+    <color name="card_view_color">#424242</color>
+</resources>

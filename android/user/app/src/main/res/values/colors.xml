@@ -1,5 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="primaryColor">#1565c0</color>
+    <color name="primaryColorDark">#003c8f</color>
+    <color name="primaryColorLight">#5e92f3</color>
+
+    <color name="secondaryColor">#27bf0b</color>
+    <color name="secondaryColorDark">#008d00</color>
+    <color name="secondaryColorLight">#6bf34c</color>
+
+    <color name="text_dark_primary">#212121</color>
+    <color name="text_primary">#424242</color>
+    <color name="text_light_primary">#757575</color>
+    <color name="text_dark_secondary">#FAFAFA</color>
+    <color name="text_secondary">#F5F5F5</color>
+    <color name="text_light_secondary">#E0E0E0</color>
+
+    <color name="icon_dark_primary">#212121</color>
+    <color name="icon_primary">#424242</color>
+    <color name="icon_light_primary">#757575</color>
+    <color name="icon_dark_secondary">#FAFAFA</color>
+    <color name="icon_secondary">#F5F5F5</color>
+    <color name="icon_light_secondary">#E0E0E0</color>
+
+    <color name="window_background_color">#FAFAFA</color>
+    <color name="card_view_color">#FFFFFF</color>
+
+
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>

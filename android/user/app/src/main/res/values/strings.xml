@@ -1,3 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <resources>
-    <string name="app_name">ZirusUser</string>
+    <string name="app_name">Zirus</string>
+
+    <string name="btn_continue">Continue</string>
+
+    <string name="et_email">Email</string>
+    <string name="et_first_name">First Name</string>
+    <string name="et_last_name">Last Name</string>
+    <string name="et_password">Password</string>
+
+    <string name="insert_email">Please, insert email</string>
+    <string name="insert_password">Please, insert password</string>
+    <string name="insert_first_name">Please, insert first name</string>
+    <string name="insert_last_name">Please, insert last name</string>
+
+    <string name="failed">Failed</string>
+
+    <string name="permission_denied">Permission denied</string>
+    <string name="permission_denied_location">Permission is required to obtain location</string>
+    <string name="request_sent">Request sent</string>
+    <string name="do_not_have_account">Do not have account?</string>
+
+    <string name="sign_in">Sign In</string>
+    <string name="sign_up">Sign Up</string>
 </resources>
