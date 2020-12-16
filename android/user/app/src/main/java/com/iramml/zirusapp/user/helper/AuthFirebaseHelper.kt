@@ -11,6 +11,13 @@ class AuthFirebaseHelper() {
     private val firebaseAuth: FirebaseAuth
     private val normalUserReference: DatabaseReference
 
+    companion object {
+        fun logout() {
+            val firebaseAuth = FirebaseAuth.getInstance()
+            firebaseAuth.signOut()
+        }
+    }
+
     init {
         val firebaseDatabase = FirebaseDatabase.getInstance()
         firebaseAuth = FirebaseAuth.getInstance()
@@ -65,6 +72,22 @@ class AuthFirebaseHelper() {
         })
     }
 
+    fun getCurrentUser(currentUserListener: CurrentUserListener) {
+        val userID = FirebaseAuth.getInstance().currentUser?.uid
+
+        normalUserReference.child(userID!!).addValueEventListener(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val normalUser = snapshot.getValue(NormalUser::class.java)
+                currentUserListener.onCompleteListener(normalUser!!)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                currentUserListener.onCancelledGetCurrentUserListener(error)
+            }
+
+        })
+    }
+
     interface SignUpListener {
         fun onCompleteListener()
         fun onCreateUserFailureListener(exception: Exception)
@@ -74,6 +97,11 @@ class AuthFirebaseHelper() {
     interface SignInListener {
         fun onCompleteListener(user: NormalUser)
         fun onFailureListener(exception: Exception)
+        fun onCancelledGetCurrentUserListener(exception: DatabaseError)
+    }
+
+    interface CurrentUserListener {
+        fun onCompleteListener(user: NormalUser)
         fun onCancelledGetCurrentUserListener(exception: DatabaseError)
     }
 
