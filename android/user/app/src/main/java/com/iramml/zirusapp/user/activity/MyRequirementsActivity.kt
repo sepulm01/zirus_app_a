@@ -11,6 +11,7 @@ import com.iramml.zirusapp.user.R
 import com.iramml.zirusapp.user.adapter.requirementlist.RequirementsAdapter
 import com.iramml.zirusapp.user.firebase.RequirementFirebaseHelper
 import com.iramml.zirusapp.user.adapter.ClickListener
+import com.iramml.zirusapp.user.firebase.RequirementListener
 import com.iramml.zirusapp.user.model.Requirement
 
 class MyRequirementsActivity : AppCompatActivity() {
@@ -29,7 +30,8 @@ class MyRequirementsActivity : AppCompatActivity() {
         ivBack = findViewById(R.id.iv_back)
         rvRequirements = findViewById(R.id.rv_requirements)
         rvRequirements.isNestedScrollingEnabled = true
-        rvRequirements.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        rvRequirements.layoutManager =
+                LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
     }
 
     private fun initListeners() {
@@ -40,7 +42,7 @@ class MyRequirementsActivity : AppCompatActivity() {
 
     private fun getData() {
         val requirementFirebaseHelper = RequirementFirebaseHelper()
-        requirementFirebaseHelper.getRequirements(object: RequirementFirebaseHelper.GetRequirementsListener {
+        requirementFirebaseHelper.getRequirements(object: RequirementListener.GetRequirementsListener {
             override fun onSuccess(requirements: ArrayList<Requirement>) {
                 implementRequirementsList(requirements)
             }

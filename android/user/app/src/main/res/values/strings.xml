@@ -51,6 +51,7 @@
     <string name="sign_up">Sign Up</string>
 
     <string name="sos">SOS</string>
+    <string name="please_give_location_permission">Please, give location permission to continue</string>
 
     <string name="title_activity_new_location">Map</string>
 

@@ -10,6 +10,7 @@ import com.google.firebase.database.DatabaseError
 import com.iramml.zirusapp.user.R
 import com.iramml.zirusapp.user.common.Common
 import com.iramml.zirusapp.user.firebase.AuthFirebaseHelper
+import com.iramml.zirusapp.user.firebase.AuthListener
 import com.iramml.zirusapp.user.model.NormalUser
 
 class SplashScreenActivity : AppCompatActivity() {
@@ -21,7 +22,7 @@ class SplashScreenActivity : AppCompatActivity() {
             val firebaseAuth = FirebaseAuth.getInstance()
 
             if (firebaseAuth.uid != null && firebaseAuth.uid != "") {
-                AuthFirebaseHelper().getCurrentUser(object: AuthFirebaseHelper.CurrentUserListener {
+                AuthFirebaseHelper().getCurrentUser(object: AuthListener.CurrentUserListener {
                     override fun onCompleteListener(user: NormalUser) {
                         Common.currentUser = user
                         startActivity(Intent(this@SplashScreenActivity, HomeActivity::class.java))

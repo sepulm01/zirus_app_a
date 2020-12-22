@@ -24,7 +24,7 @@ class AuthFirebaseHelper {
         normalUserReference = firebaseDatabase.getReference(Common.NormalUserInfoTable)
     }
 
-    fun signIn(email: String, password: String, signInListener: SignInListener) {
+    fun signIn(email: String, password: String, signInListener: AuthListener.SignInListener) {
         firebaseAuth.signInWithEmailAndPassword(email, password)
             .addOnSuccessListener {
                 getCurrentUser(signInListener)
@@ -33,7 +33,7 @@ class AuthFirebaseHelper {
             }
     }
 
-    fun signUp(userDriver: NormalUser, password: String, signUpListener: SignUpListener) {
+    fun signUp(userDriver: NormalUser, password: String, signUpListener: AuthListener.SignUpListener) {
         firebaseAuth.createUserWithEmailAndPassword(userDriver.email, password)
             .addOnSuccessListener {
                 insertSignUpData(userDriver, signUpListener)
@@ -43,7 +43,7 @@ class AuthFirebaseHelper {
             }
     }
 
-    private fun insertSignUpData(userDriver: NormalUser, signUpListener: SignUpListener) {
+    private fun insertSignUpData(userDriver: NormalUser, signUpListener: AuthListener.SignUpListener) {
         val userID = FirebaseAuth.getInstance().currentUser?.uid
 
 
@@ -55,7 +55,7 @@ class AuthFirebaseHelper {
                 }
     }
 
-    private fun getCurrentUser(signInListener: SignInListener) {
+    private fun getCurrentUser(signInListener: AuthListener.SignInListener) {
         val userID = FirebaseAuth.getInstance().currentUser?.uid
 
         normalUserReference.child(userID!!).addValueEventListener(object: ValueEventListener {
@@ -71,7 +71,7 @@ class AuthFirebaseHelper {
         })
     }
 
-    fun getCurrentUser(currentUserListener: CurrentUserListener) {
+    fun getCurrentUser(currentUserListener: AuthListener.CurrentUserListener) {
         val userID = FirebaseAuth.getInstance().currentUser?.uid
 
         normalUserReference.child(userID!!).addValueEventListener(object: ValueEventListener {
@@ -87,22 +87,7 @@ class AuthFirebaseHelper {
         })
     }
 
-    interface SignUpListener {
-        fun onCompleteListener()
-        fun onCreateUserFailureListener(exception: Exception)
-        fun onInsertUserDataFailureListener(exception: Exception)
-    }
 
-    interface SignInListener {
-        fun onCompleteListener(user: NormalUser)
-        fun onFailureListener(exception: Exception)
-        fun onCancelledGetCurrentUserListener(exception: DatabaseError)
-    }
-
-    interface CurrentUserListener {
-        fun onCompleteListener(user: NormalUser)
-        fun onCancelledGetCurrentUserListener(exception: DatabaseError)
-    }
 
 }
 

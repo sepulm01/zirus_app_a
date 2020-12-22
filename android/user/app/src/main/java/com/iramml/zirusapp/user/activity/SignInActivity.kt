@@ -12,6 +12,7 @@ import com.google.firebase.database.DatabaseError
 import com.iramml.zirusapp.user.R
 import com.iramml.zirusapp.user.common.Common
 import com.iramml.zirusapp.user.firebase.AuthFirebaseHelper
+import com.iramml.zirusapp.user.firebase.AuthListener
 import com.iramml.zirusapp.user.message.FormMessages
 import com.iramml.zirusapp.user.message.ShowMessage
 import com.iramml.zirusapp.user.model.NormalUser
@@ -68,7 +69,7 @@ class SignInActivity : AppCompatActivity() {
         val waitingDialog = SpotsDialog.Builder().setContext(this).build()
         waitingDialog.show()
 
-        AuthFirebaseHelper().signIn(etEmail.text.toString(), etPassword.text.toString(), object: AuthFirebaseHelper.SignInListener {
+        AuthFirebaseHelper().signIn(etEmail.text.toString(), etPassword.text.toString(), object: AuthListener.SignInListener {
             override fun onCompleteListener(user: NormalUser) {
                 waitingDialog.dismiss()
                 Common.currentUser = user

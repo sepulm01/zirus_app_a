@@ -18,10 +18,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ZirusUser">
-        <activity android:name=".activity.MyRequirementsActivity"></activity>
-        <activity android:name=".activity.SOSSentActivity" />
-        <activity android:name=".activity.SOSActivity" />
-        <activity android:name=".activity.RequirementDetailActivity" />
+        <activity android:name=".activity.MyRequirementsActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.SOSSentActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.SOSActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.RequirementDetailActivity"
+            android:screenOrientation="portrait"/>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -36,8 +40,10 @@
 
         <activity
             android:name=".activity.NewLocationActivity"
-            android:label="@string/title_activity_new_location" />
-        <activity android:name=".activity.NewRequirementActivity" />
+            android:label="@string/title_activity_new_location"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.NewRequirementActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.HomeActivity"
             android:screenOrientation="portrait" />

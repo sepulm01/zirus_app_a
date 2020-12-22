@@ -11,6 +11,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.iramml.zirusapp.user.R
 import com.iramml.zirusapp.user.common.Common
 import com.iramml.zirusapp.user.firebase.AuthFirebaseHelper
+import com.iramml.zirusapp.user.firebase.AuthListener
 import com.iramml.zirusapp.user.message.FormMessages
 import com.iramml.zirusapp.user.message.ShowMessage
 import com.iramml.zirusapp.user.model.NormalUser
@@ -101,7 +102,7 @@ class SignUpActivity : AppCompatActivity() {
         val waitingDialog = SpotsDialog.Builder().setContext(this).build()
         waitingDialog.show()
 
-        authFirebaseHelper.signUp(normalUser, etPassword.text.toString(), object: AuthFirebaseHelper.SignUpListener {
+        authFirebaseHelper.signUp(normalUser, etPassword.text.toString(), object: AuthListener.SignUpListener {
             override fun onCompleteListener() {
                 waitingDialog.dismiss()
                 Common.currentUser = normalUser

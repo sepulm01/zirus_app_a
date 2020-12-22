@@ -14,6 +14,7 @@ class ShowMessage {
             when (messages) {
                 Messages.RATIONALE_LOCATION -> message = context.resources.getString(R.string.permission_denied_location)
                 Messages.REQUEST_SENT_SUCCESS -> message = context.resources.getString(R.string.request_sent)
+                Messages.GIVE_LOCATION_PERMISSION -> message = context.resources.getString(R.string.please_give_location_permission)
             }
 
             displayMessage(root, context, message)

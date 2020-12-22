@@ -17,6 +17,7 @@ import com.iramml.zirusapp.user.R
 import com.iramml.zirusapp.user.common.Common
 import com.iramml.zirusapp.user.helper.GoogleAPIHelper
 import com.iramml.zirusapp.user.firebase.RequirementFirebaseHelper
+import com.iramml.zirusapp.user.firebase.RequirementListener
 import com.iramml.zirusapp.user.listener.LocationListener
 import com.iramml.zirusapp.user.message.Errors
 import com.iramml.zirusapp.user.message.FormMessages
@@ -54,7 +55,6 @@ class NewRequirementActivity : AppCompatActivity() {
     private var latSelected: Double = -1.0
     private var lngSelected: Double = -1.0
     private var requirementImgUri: Uri? = null
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -168,7 +168,7 @@ class NewRequirementActivity : AppCompatActivity() {
         requirementFirebaseHelper.createNormalRequirement(
             requirement,
             requirementImgUri!!,
-            object : RequirementFirebaseHelper.CreateNormalRequirementListener {
+            object : RequirementListener.CreateNormalRequirementListener {
                 override fun onSuccessListener() {
                     waitingDialog.dismiss()
                     startActivity(
@@ -207,7 +207,6 @@ class NewRequirementActivity : AppCompatActivity() {
         )
     }
 
-
     private fun chooseImage() {
         Dexter.withContext(this)
                 .withPermissions(Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -230,7 +229,6 @@ class NewRequirementActivity : AppCompatActivity() {
 
                 }).check()
     }
-
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

@@ -3,9 +3,7 @@ package com.iramml.zirusapp.user.util
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.Context
 import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
@@ -63,7 +61,7 @@ class LocationUtil(var activity: Activity, locationListener: LocationListener) {
         permissionRequest()
     }
 
-    fun onRequestPermissionResult(requestCode: Int, permissions: Array<String?>, grantResults: IntArray) {
+    fun onRequestPermissionResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         when (requestCode) {
             REQUEST_CODE_LOCATION -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)

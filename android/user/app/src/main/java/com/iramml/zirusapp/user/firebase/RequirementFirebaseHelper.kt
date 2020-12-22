@@ -28,7 +28,7 @@ class RequirementFirebaseHelper {
     }
 
     fun createNormalRequirement(requirement: Requirement, requirementImgUri: Uri,
-        createNormalRequirementListener: CreateNormalRequirementListener) {
+        createNormalRequirementListener: RequirementListener.CreateNormalRequirementListener) {
         val imageName: String = UUID.randomUUID().toString()
         val imageFolder: StorageReference = firebaseStorage.reference.child("requirement/images/$imageName")
         imageFolder.putFile(requirementImgUri)
@@ -44,7 +44,7 @@ class RequirementFirebaseHelper {
     }
 
     private fun registerNormalRequirement(requirement: Requirement,
-        createNormalRequirementListener: CreateNormalRequirementListener) {
+        createNormalRequirementListener: RequirementListener.CreateNormalRequirementListener) {
         allRequirementsReference
             .push()
             .setValue(requirement, object: DatabaseReference.CompletionListener {
@@ -69,9 +69,35 @@ class RequirementFirebaseHelper {
             })
     }
 
-    fun getRequirements(getRequirementsListener: GetRequirementsListener) {
+    fun createSOSRequirement(requirement: Requirement,
+        createNormalRequirementListener: RequirementListener.CreateSOSRequirementListener) {
+        allRequirementsReference
+            .push()
+            .setValue(requirement, object: DatabaseReference.CompletionListener {
+                override fun onComplete(error: DatabaseError?, ref: DatabaseReference) {
+                    if (error != null) {
+                        createNormalRequirementListener.onRegisterReferenceDetailsFailure(error)
+                        return
+                    }
+
+                    val requirementID = ref.key
+                    requirementUserReference
+                        .child(firebaseAuth.currentUser!!.uid)
+                        .push()
+                        .setValue(requirementID)
+                        .addOnSuccessListener {
+                            createNormalRequirementListener.onSuccessListener()
+                        }.addOnFailureListener {
+                            createNormalRequirementListener.onRegisterReferenceListFailure(it)
+                        }
+                }
+
+            })
+    }
+
+    fun getRequirements(getRequirementsListener: RequirementListener.GetRequirementsListener) {
         val requirements = ArrayList<Requirement>()
-        getRequirementIDs(object: GetRequirementsIDListener {
+        getRequirementIDs(object: RequirementListener.GetRequirementsIDListener {
             override fun onSuccess(requirementsID: ArrayList<String>) {
                 requirements.clear()
                 requirementsID.forEach {
@@ -84,7 +110,10 @@ class RequirementFirebaseHelper {
                                     requirement.id = snapshot.key!!
                                     requirements.add(requirement)
                                 }
-
+                                requirements.sortBy { requirementItem ->
+                                    requirementItem.id
+                                }
+                                requirements.reverse()
                                 getRequirementsListener.onSuccess(requirements)
 
                             }
@@ -100,7 +129,7 @@ class RequirementFirebaseHelper {
         })
     }
 
-    private fun getRequirementIDs(getRequirementsIDListener: GetRequirementsIDListener) {
+    private fun getRequirementIDs(getRequirementsIDListener: RequirementListener.GetRequirementsIDListener) {
         val requirementsID = ArrayList<String>()
         requirementUserReference
             .child(firebaseAuth.currentUser!!.uid)
@@ -123,18 +152,22 @@ class RequirementFirebaseHelper {
             })
     }
 
-    interface CreateNormalRequirementListener {
-        fun onSuccessListener()
-        fun onUploadedImageError(exception: Exception)
-        fun onRegisterReferenceDetailsFailure(exception: DatabaseError)
-        fun onRegisterReferenceListFailure(exception: Exception)
-    }
+    fun getRequirementByID(requirementID: String, getRequirementListener: RequirementListener.GetRequirementListener) {
+        allRequirementsReference
+                .child(requirementID)
+                .addValueEventListener(object: ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val requirement = snapshot.getValue(Requirement::class.java)
 
-    interface GetRequirementsListener {
-        fun onSuccess(requirements: ArrayList<Requirement>)
-    }
+                        if (requirement != null) {
+                            getRequirementListener.onSuccess(requirement)
+                        }
+                    }
 
-    interface GetRequirementsIDListener {
-        fun onSuccess(requirementsID: ArrayList<String>)
+                    override fun onCancelled(error: DatabaseError) {
+
+                    }
+
+                })
     }
 }
