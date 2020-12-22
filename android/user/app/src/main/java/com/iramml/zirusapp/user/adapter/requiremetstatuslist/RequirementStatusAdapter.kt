@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.github.vipulasri.timelineview.TimelineView
 import com.iramml.zirusapp.user.R
 import com.iramml.zirusapp.user.adapter.ClickListener
-import com.iramml.zirusapp.user.model.RequirementStatusItem
+import com.iramml.zirusapp.user.model.firebase.RequirementStatusItem
 
 
 class RequirementStatusAdapter(var context: Context?, private var items: ArrayList<RequirementStatusItem>, private var listener: ClickListener) : RecyclerView.Adapter<RequirementStatusViewHolder>() {

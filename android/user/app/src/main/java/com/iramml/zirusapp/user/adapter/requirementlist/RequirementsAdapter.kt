@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.iramml.zirusapp.user.R
 import com.iramml.zirusapp.user.adapter.ClickListener
-import com.iramml.zirusapp.user.model.Requirement
+import com.iramml.zirusapp.user.model.firebase.Requirement
 
 
 class RequirementsAdapter(var context: Context?, private var items: ArrayList<Requirement>, private var listener: ClickListener) : RecyclerView.Adapter<RequirementViewHolder>() {

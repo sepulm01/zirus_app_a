@@ -1,6 +1,6 @@
 package com.iramml.zirusapp.user.common
 
-import com.iramml.zirusapp.user.model.NormalUser
+import com.iramml.zirusapp.user.model.firebase.NormalUser
 
 class Common {
     companion object {

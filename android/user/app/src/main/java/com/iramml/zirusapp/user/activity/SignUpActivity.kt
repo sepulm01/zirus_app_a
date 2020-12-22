@@ -14,7 +14,7 @@ import com.iramml.zirusapp.user.firebase.AuthFirebaseHelper
 import com.iramml.zirusapp.user.firebase.AuthListener
 import com.iramml.zirusapp.user.message.FormMessages
 import com.iramml.zirusapp.user.message.ShowMessage
-import com.iramml.zirusapp.user.model.NormalUser
+import com.iramml.zirusapp.user.model.firebase.NormalUser
 import com.iramml.zirusapp.user.util.Utilities
 import dmax.dialog.SpotsDialog
 import java.lang.Exception

@@ -3,8 +3,7 @@ package com.iramml.zirusapp.user.firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.iramml.zirusapp.user.common.Common
-import com.iramml.zirusapp.user.model.NormalUser
-import java.lang.Exception
+import com.iramml.zirusapp.user.model.firebase.NormalUser
 
 class AuthFirebaseHelper {
     private val firebaseAuth: FirebaseAuth

@@ -11,8 +11,8 @@ import com.iramml.zirusapp.user.adapter.ClickListener
 import com.iramml.zirusapp.user.adapter.requiremetstatuslist.RequirementStatusAdapter
 import com.iramml.zirusapp.user.firebase.RequirementFirebaseHelper
 import com.iramml.zirusapp.user.firebase.RequirementListener
-import com.iramml.zirusapp.user.model.Requirement
-import com.iramml.zirusapp.user.model.RequirementStatusItem
+import com.iramml.zirusapp.user.model.firebase.Requirement
+import com.iramml.zirusapp.user.model.firebase.RequirementStatusItem
 
 class RequirementDetailActivity : AppCompatActivity() {
     private lateinit var ivBack: ImageView

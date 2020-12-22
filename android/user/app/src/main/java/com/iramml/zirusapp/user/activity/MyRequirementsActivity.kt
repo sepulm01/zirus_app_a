@@ -12,7 +12,7 @@ import com.iramml.zirusapp.user.adapter.requirementlist.RequirementsAdapter
 import com.iramml.zirusapp.user.firebase.RequirementFirebaseHelper
 import com.iramml.zirusapp.user.adapter.ClickListener
 import com.iramml.zirusapp.user.firebase.RequirementListener
-import com.iramml.zirusapp.user.model.Requirement
+import com.iramml.zirusapp.user.model.firebase.Requirement
 
 class MyRequirementsActivity : AppCompatActivity() {
     private lateinit var ivBack: ImageView
@@ -65,4 +65,5 @@ class MyRequirementsActivity : AppCompatActivity() {
 
         rvRequirements.adapter = requirementsAdapter
     }
+
 }

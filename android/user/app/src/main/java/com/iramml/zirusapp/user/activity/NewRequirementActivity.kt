@@ -4,26 +4,34 @@ import android.Manifest
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.text.Editable
 import android.text.TextUtils
+import android.text.TextWatcher
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import com.android.volley.toolbox.HttpResponse
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.database.DatabaseError
+import com.google.gson.Gson
 import com.iramml.zirusapp.user.R
+import com.iramml.zirusapp.user.common.AppConfig
 import com.iramml.zirusapp.user.common.Common
-import com.iramml.zirusapp.user.helper.GoogleAPIHelper
 import com.iramml.zirusapp.user.firebase.RequirementFirebaseHelper
 import com.iramml.zirusapp.user.firebase.RequirementListener
+import com.iramml.zirusapp.user.helper.GoogleAPIHelper
+import com.iramml.zirusapp.user.helper.GoogleAPIsListener
 import com.iramml.zirusapp.user.listener.LocationListener
 import com.iramml.zirusapp.user.message.Errors
 import com.iramml.zirusapp.user.message.FormMessages
 import com.iramml.zirusapp.user.message.ShowMessage
-import com.iramml.zirusapp.user.model.Requirement
-import com.iramml.zirusapp.user.model.RequirementStatusItem
+import com.iramml.zirusapp.user.model.firebase.Requirement
+import com.iramml.zirusapp.user.model.firebase.RequirementStatusItem
+import com.iramml.zirusapp.user.model.googleapis.PlacesResponse
+import com.iramml.zirusapp.user.model.googleapis.PlacesResult
 import com.iramml.zirusapp.user.util.BitmapUtils
 import com.iramml.zirusapp.user.util.LocationUtil
 import com.iramml.zirusapp.user.util.Utilities
@@ -33,9 +41,12 @@ import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import dmax.dialog.SpotsDialog
 import java.io.IOException
+import java.io.UnsupportedEncodingException
+import java.net.URLEncoder
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class NewRequirementActivity : AppCompatActivity() {
@@ -89,13 +100,13 @@ class NewRequirementActivity : AppCompatActivity() {
 
                     val googleAPIHelper = GoogleAPIHelper(this@NewRequirementActivity)
                     googleAPIHelper.getAddressByLatLng(
-                        LatLng(latSelected, lngSelected),
-                        object : GoogleAPIHelper.GetAddressByLatLngListener {
-                            override fun onRequestResult(address: String) {
-                                etAddress.setText(address)
-                            }
+                            LatLng(latSelected, lngSelected),
+                            object : GoogleAPIsListener.GetAddressByLatLngListener {
+                                override fun onRequestResult(address: String) {
+                                    etAddress.setText(address)
+                                }
 
-                        }
+                            }
                     )
 
                 }
@@ -126,9 +137,9 @@ class NewRequirementActivity : AppCompatActivity() {
 
         if (TextUtils.isEmpty(etDescription.text.toString())) {
             ShowMessage.messageForm(
-                root,
-                this@NewRequirementActivity,
-                FormMessages.FILL_DESCRIPTION
+                    root,
+                    this@NewRequirementActivity,
+                    FormMessages.FILL_DESCRIPTION
             )
             return
         }
@@ -152,10 +163,10 @@ class NewRequirementActivity : AppCompatActivity() {
 
         requirement.dateTime = strDate
         val requirementStatusItem = RequirementStatusItem(
-            "Ingresado",
-            "",
-            "",
-            strDate,
+                "Ingresado",
+                "",
+                "",
+                strDate,
         )
         requirement.statusItems.add(requirementStatusItem)
         createRequirement(requirement)
@@ -166,44 +177,44 @@ class NewRequirementActivity : AppCompatActivity() {
         waitingDialog.show()
         val requirementFirebaseHelper = RequirementFirebaseHelper()
         requirementFirebaseHelper.createNormalRequirement(
-            requirement,
-            requirementImgUri!!,
-            object : RequirementListener.CreateNormalRequirementListener {
-                override fun onSuccessListener() {
-                    waitingDialog.dismiss()
-                    startActivity(
-                        Intent(
-                            this@NewRequirementActivity,
-                            MyRequirementsActivity::class.java
+                requirement,
+                requirementImgUri!!,
+                object : RequirementListener.CreateNormalRequirementListener {
+                    override fun onSuccessListener() {
+                        waitingDialog.dismiss()
+                        startActivity(
+                                Intent(
+                                        this@NewRequirementActivity,
+                                        MyRequirementsActivity::class.java
+                                )
                         )
-                    )
-                    finish()
-                }
+                        finish()
+                    }
 
-                override fun onUploadedImageError(exception: Exception) {
-                    waitingDialog.dismiss()
-                    Utilities.displayMessage(
-                        root,
-                        this@NewRequirementActivity,
-                        exception.localizedMessage
-                    )
-                }
+                    override fun onUploadedImageError(exception: Exception) {
+                        waitingDialog.dismiss()
+                        Utilities.displayMessage(
+                                root,
+                                this@NewRequirementActivity,
+                                exception.localizedMessage
+                        )
+                    }
 
-                override fun onRegisterReferenceDetailsFailure(exception: DatabaseError) {
-                    waitingDialog.dismiss()
-                    ShowMessage.messageError(root, this@NewRequirementActivity, Errors.FAILED)
-                }
+                    override fun onRegisterReferenceDetailsFailure(exception: DatabaseError) {
+                        waitingDialog.dismiss()
+                        ShowMessage.messageError(root, this@NewRequirementActivity, Errors.FAILED)
+                    }
 
-                override fun onRegisterReferenceListFailure(exception: Exception) {
-                    waitingDialog.dismiss()
-                    Utilities.displayMessage(
-                        root,
-                        this@NewRequirementActivity,
-                        exception.localizedMessage
-                    )
-                }
+                    override fun onRegisterReferenceListFailure(exception: Exception) {
+                        waitingDialog.dismiss()
+                        Utilities.displayMessage(
+                                root,
+                                this@NewRequirementActivity,
+                                exception.localizedMessage
+                        )
+                    }
 
-            }
+                }
         )
     }
 
@@ -221,8 +232,8 @@ class NewRequirementActivity : AppCompatActivity() {
                     }
 
                     override fun onPermissionRationaleShouldBeShown(
-                        permission: MutableList<com.karumi.dexter.listener.PermissionRequest>?,
-                        token: PermissionToken?
+                            permission: MutableList<com.karumi.dexter.listener.PermissionRequest>?,
+                            token: PermissionToken?
                     ) {
                         token!!.continuePermissionRequest()
                     }
@@ -236,10 +247,12 @@ class NewRequirementActivity : AppCompatActivity() {
             if (resultCode == RESULT_OK) {
                 val latResult = data?.getDoubleExtra("lat", -1.0)
                 val lngResult = data?.getDoubleExtra("lng", -1.0)
+                val address = data?.getStringExtra("address")
 
-                if (latResult != -1.0 && lngResult != -1.0) {
+                if (latResult != -1.0 && lngResult != -1.0 && address != "") {
                     latSelected = latResult!!
                     lngSelected = lngResult!!
+                    etAddress.setText(address)
                 }
             }
         }
@@ -259,6 +272,5 @@ class NewRequirementActivity : AppCompatActivity() {
         if (locationUtil != null)
             locationUtil!!.stopUpdateLocation()
     }
-
 
 }

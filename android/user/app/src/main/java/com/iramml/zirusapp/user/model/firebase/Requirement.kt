@@ -1,4 +1,4 @@
-package com.iramml.zirusapp.user.model
+package com.iramml.zirusapp.user.model.firebase
 
 data class Requirement (
     var id: String = "",

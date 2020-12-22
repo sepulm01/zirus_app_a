@@ -11,7 +11,7 @@ import com.iramml.zirusapp.user.R
 import com.iramml.zirusapp.user.common.Common
 import com.iramml.zirusapp.user.firebase.AuthFirebaseHelper
 import com.iramml.zirusapp.user.firebase.AuthListener
-import com.iramml.zirusapp.user.model.NormalUser
+import com.iramml.zirusapp.user.model.firebase.NormalUser
 
 class SplashScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

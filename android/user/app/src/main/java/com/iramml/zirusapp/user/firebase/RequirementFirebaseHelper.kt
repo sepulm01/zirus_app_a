@@ -6,8 +6,7 @@ import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.iramml.zirusapp.user.common.Common
-import com.iramml.zirusapp.user.model.Requirement
-import java.lang.Exception
+import com.iramml.zirusapp.user.model.firebase.Requirement
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -28,7 +27,7 @@ class RequirementFirebaseHelper {
     }
 
     fun createNormalRequirement(requirement: Requirement, requirementImgUri: Uri,
-        createNormalRequirementListener: RequirementListener.CreateNormalRequirementListener) {
+                                createNormalRequirementListener: RequirementListener.CreateNormalRequirementListener) {
         val imageName: String = UUID.randomUUID().toString()
         val imageFolder: StorageReference = firebaseStorage.reference.child("requirement/images/$imageName")
         imageFolder.putFile(requirementImgUri)
@@ -44,7 +43,7 @@ class RequirementFirebaseHelper {
     }
 
     private fun registerNormalRequirement(requirement: Requirement,
-        createNormalRequirementListener: RequirementListener.CreateNormalRequirementListener) {
+                                          createNormalRequirementListener: RequirementListener.CreateNormalRequirementListener) {
         allRequirementsReference
             .push()
             .setValue(requirement, object: DatabaseReference.CompletionListener {
@@ -70,7 +69,7 @@ class RequirementFirebaseHelper {
     }
 
     fun createSOSRequirement(requirement: Requirement,
-        createNormalRequirementListener: RequirementListener.CreateSOSRequirementListener) {
+                             createNormalRequirementListener: RequirementListener.CreateSOSRequirementListener) {
         allRequirementsReference
             .push()
             .setValue(requirement, object: DatabaseReference.CompletionListener {
