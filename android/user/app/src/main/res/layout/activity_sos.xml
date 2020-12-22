@@ -6,6 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".activity.SOSActivity">
 
+    <ImageView
+        android:id="@+id/iv_back"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/ic_baseline_arrow_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -28,10 +38,11 @@
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
         <Button
+            android:id="@+id/btn_confirm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/btn_continue"
+            android:text="@string/confirm"
             android:backgroundTint="@color/primaryColor"
             android:textColor="@android:color/white"/>
     </LinearLayout>

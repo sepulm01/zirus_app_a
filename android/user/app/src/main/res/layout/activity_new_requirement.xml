@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.NewRequirementActivity">
+    tools:context=".activity.NewRequirementActivity"
+    android:id="@+id/root">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -43,19 +44,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_marginTop="16dp"
-            android:layout_marginLeft="24dp"
-            android:layout_marginRight="24dp">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/et_name"/>
-        </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_marginTop="8dp"
             android:layout_marginLeft="24dp"
             android:layout_marginRight="24dp">
@@ -63,33 +51,8 @@
                 android:id="@+id/et_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/et_address"/>
-        </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_marginTop="8dp"
-            android:layout_marginLeft="24dp"
-            android:layout_marginRight="24dp">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_funa"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/et_funa"/>
-        </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_marginTop="8dp"
-            android:layout_marginLeft="24dp"
-            android:layout_marginRight="24dp">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_location"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/et_location"/>
+                android:hint="@string/et_address"
+                android:enabled="false"/>
         </com.google.android.material.textfield.TextInputLayout>
         <Button
             android:id="@+id/btn_current_location"

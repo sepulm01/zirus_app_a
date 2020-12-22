@@ -132,6 +132,37 @@
                     android:lines="1" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_marginTop="8dp"
+                app:startIconDrawable="@drawable/ic_baseline_phone">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/et_phone"
+                    android:inputType="phone"
+                    android:lines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_marginTop="8dp"
+                app:startIconDrawable="@drawable/ic_baseline_account_box">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_rut"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/et_rut"
+                    android:inputType="text"
+                    android:lines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <Button
                 android:id="@+id/btn_continue"

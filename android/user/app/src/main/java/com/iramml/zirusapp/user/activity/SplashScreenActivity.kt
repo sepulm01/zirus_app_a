@@ -8,7 +8,8 @@ import android.os.Looper
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseError
 import com.iramml.zirusapp.user.R
-import com.iramml.zirusapp.user.helper.AuthFirebaseHelper
+import com.iramml.zirusapp.user.common.Common
+import com.iramml.zirusapp.user.firebase.AuthFirebaseHelper
 import com.iramml.zirusapp.user.model.NormalUser
 
 class SplashScreenActivity : AppCompatActivity() {
@@ -22,6 +23,7 @@ class SplashScreenActivity : AppCompatActivity() {
             if (firebaseAuth.uid != null && firebaseAuth.uid != "") {
                 AuthFirebaseHelper().getCurrentUser(object: AuthFirebaseHelper.CurrentUserListener {
                     override fun onCompleteListener(user: NormalUser) {
+                        Common.currentUser = user
                         startActivity(Intent(this@SplashScreenActivity, HomeActivity::class.java))
                         finish()
                     }

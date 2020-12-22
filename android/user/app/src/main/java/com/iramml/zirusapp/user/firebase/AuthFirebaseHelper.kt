@@ -1,13 +1,12 @@
-package com.iramml.zirusapp.user.helper
+package com.iramml.zirusapp.user.firebase
 
-import android.widget.NumberPicker
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.iramml.zirusapp.user.common.Common
 import com.iramml.zirusapp.user.model.NormalUser
 import java.lang.Exception
 
-class AuthFirebaseHelper() {
+class AuthFirebaseHelper {
     private val firebaseAuth: FirebaseAuth
     private val normalUserReference: DatabaseReference
 

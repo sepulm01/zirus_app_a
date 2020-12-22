@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "353352339924",
+    "firebase_url": "https://seg-municipal.firebaseio.com",
+    "project_id": "seg-municipal",
+    "storage_bucket": "seg-municipal.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:353352339924:android:0a51e8a40bec0a389ac641",
+        "android_client_info": {
+          "package_name": "com.iramml.zirusapp.guard"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "353352339924-e36n3evccp4r7oibojq9d9f6112fp9it.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBk0YmwRbpJlXCcwYm8HTcuInW0AvCwb9Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "353352339924-e36n3evccp4r7oibojq9d9f6112fp9it.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:353352339924:android:6b0d1160d9c46d429ac641",
+        "android_client_info": {
+          "package_name": "com.iramml.zirusapp.user"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "353352339924-e36n3evccp4r7oibojq9d9f6112fp9it.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBk0YmwRbpJlXCcwYm8HTcuInW0AvCwb9Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "353352339924-e36n3evccp4r7oibojq9d9f6112fp9it.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

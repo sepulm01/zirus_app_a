@@ -26,6 +26,11 @@ class ShowMessage {
                 FormMessages.FILL_LAST_NAME -> message = context.resources.getString(R.string.insert_last_name)
                 FormMessages.FILL_EMAIL -> message = context.resources.getString(R.string.insert_email)
                 FormMessages.FILL_PASSWORD -> message = context.resources.getString(R.string.insert_password)
+                FormMessages.FILL_PHONE -> message = context.resources.getString(R.string.insert_phone)
+                FormMessages.FILL_RUT -> message = context.resources.getString(R.string.insert_rut)
+                FormMessages.FILL_ADDRESS -> message = context.resources.getString(R.string.insert_address)
+                FormMessages.FILL_DESCRIPTION -> message = context.resources.getString(R.string.insert_description)
+                FormMessages.SELECT_PHOTO -> message = context.resources.getString(R.string.select_photo)
             }
 
             displayMessage(root, context, message)

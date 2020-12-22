@@ -11,7 +11,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.database.DatabaseError
 import com.iramml.zirusapp.user.R
 import com.iramml.zirusapp.user.common.Common
-import com.iramml.zirusapp.user.helper.AuthFirebaseHelper
+import com.iramml.zirusapp.user.firebase.AuthFirebaseHelper
 import com.iramml.zirusapp.user.message.FormMessages
 import com.iramml.zirusapp.user.message.ShowMessage
 import com.iramml.zirusapp.user.model.NormalUser

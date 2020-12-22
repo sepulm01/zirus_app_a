@@ -5,25 +5,32 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.TextView
 import com.iramml.zirusapp.user.R
-import com.iramml.zirusapp.user.helper.AuthFirebaseHelper
+import com.iramml.zirusapp.user.common.Common
+import com.iramml.zirusapp.user.firebase.AuthFirebaseHelper
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var ivLogOut: ImageView
+    private lateinit var tvWelcome: TextView
     private lateinit var btnNewRequirement: Button
-    private lateinit var btnMyRequierements: Button
+    private lateinit var btnMyRequirements: Button
+    private lateinit var btnSOS: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         initViews()
         initListeners()
+        tvWelcome.text = "${getString(R.string.welcome_comma)} ${Common.currentUser?.firstName}"
     }
 
     private fun initViews() {
         ivLogOut = findViewById(R.id.iv_log_out)
+        tvWelcome = findViewById(R.id.tv_welcome)
         btnNewRequirement = findViewById(R.id.btn_new_requirement)
-        btnMyRequierements = findViewById(R.id.btn_my_requirements)
+        btnMyRequirements = findViewById(R.id.btn_my_requirements)
+        btnSOS = findViewById(R.id.btn_sos)
     }
 
     private fun initListeners() {
@@ -37,8 +44,12 @@ class HomeActivity : AppCompatActivity() {
             startActivity(Intent(this@HomeActivity, NewRequirementActivity::class.java))
         }
 
-        btnMyRequierements.setOnClickListener {
+        btnMyRequirements.setOnClickListener {
             startActivity(Intent(this@HomeActivity, MyRequirementsActivity::class.java))
+        }
+
+        btnSOS.setOnClickListener {
+            startActivity(Intent(this@HomeActivity, SOSActivity::class.java))
         }
     }
 }

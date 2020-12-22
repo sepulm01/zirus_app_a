@@ -5,22 +5,16 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
-import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
 import android.widget.Button
 import androidx.cardview.widget.CardView
 import com.google.android.material.textfield.TextInputEditText
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
 import com.iramml.zirusapp.user.R
 import com.iramml.zirusapp.user.common.Common
-import com.iramml.zirusapp.user.helper.AuthFirebaseHelper
+import com.iramml.zirusapp.user.firebase.AuthFirebaseHelper
 import com.iramml.zirusapp.user.message.FormMessages
 import com.iramml.zirusapp.user.message.ShowMessage
 import com.iramml.zirusapp.user.model.NormalUser
 import com.iramml.zirusapp.user.util.Utilities
-import de.hdodenhof.circleimageview.CircleImageView
 import dmax.dialog.SpotsDialog
 import java.lang.Exception
 
@@ -31,6 +25,8 @@ class SignUpActivity : AppCompatActivity() {
     private lateinit var etLastName: TextInputEditText
     private lateinit var etEmail: TextInputEditText
     private lateinit var etPassword: TextInputEditText
+    private lateinit var etPhone: TextInputEditText
+    private lateinit var etRUT: TextInputEditText
     private lateinit var btnContinue: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +43,8 @@ class SignUpActivity : AppCompatActivity() {
         etLastName = findViewById(R.id.et_last_name)
         etEmail = findViewById(R.id.et_email)
         etPassword = findViewById(R.id.et_password)
+        etPhone = findViewById(R.id.et_phone)
+        etRUT = findViewById(R.id.et_rut)
         btnContinue = findViewById(R.id.btn_continue)
     }
 
@@ -78,6 +76,14 @@ class SignUpActivity : AppCompatActivity() {
             ShowMessage.messageForm(root, this, FormMessages.FILL_PASSWORD)
             return
         }
+        if (TextUtils.isEmpty(etPhone.text)) {
+            ShowMessage.messageForm(root, this, FormMessages.FILL_PHONE)
+            return
+        }
+        if (TextUtils.isEmpty(etRUT.text)) {
+            ShowMessage.messageForm(root, this, FormMessages.FILL_RUT)
+            return
+        }
 
         signUp()
     }
@@ -87,7 +93,9 @@ class SignUpActivity : AppCompatActivity() {
         val normalUser = NormalUser(
                 etFirstName.text.toString(),
                 etLastName.text.toString(),
-                etEmail.text.toString()
+                etEmail.text.toString(),
+                etPhone.text.toString(),
+                etRUT.text.toString(),
         )
 
         val waitingDialog = SpotsDialog.Builder().setContext(this).build()

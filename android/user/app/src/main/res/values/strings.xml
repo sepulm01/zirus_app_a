@@ -10,9 +10,9 @@
     <string name="et_description">Description</string>
     <string name="et_email">Email</string>
     <string name="et_first_name">First Name</string>
-    <string name="et_funa">Funa</string>
+    <string name="et_phone">Phone</string>
+    <string name="et_rut">RUT</string>
     <string name="et_last_name">Last Name</string>
-    <string name="et_location">Location</string>
     <string name="et_name">Name</string>
     <string name="et_password">Password</string>
 
@@ -25,9 +25,9 @@
     <string name="insert_description">Please, insert description</string>
     <string name="insert_email">Please, insert email</string>
     <string name="insert_first_name">Please, insert first name</string>
-    <string name="insert_funa">Please, insert funa</string>
+    <string name="insert_phone">Please, insert phone</string>
+    <string name="insert_rut">Please, insert RUT</string>
     <string name="insert_last_name">Please, insert last name</string>
-    <string name="insert_location">Please, insert location</string>
     <string name="insert_name">Please, insert name</string>
     <string name="insert_password">Please, insert password</string>
 
