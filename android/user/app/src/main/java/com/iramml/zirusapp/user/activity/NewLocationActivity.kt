@@ -118,12 +118,6 @@ class NewLocationActivity : AppCompatActivity(), OnMapReadyCallback {
 
         }
 
-        /*etAddress.setOnClickListener {
-            clSearchLocation.visibility = View.VISIBLE
-            etSearchAddress.requestFocus()
-            etSearchAddress.setText("")
-        }*/
-
         etAddress.setOnFocusChangeListener { v, hasFocus ->
             if (hasFocus) {
                 toggleSearchLocation()

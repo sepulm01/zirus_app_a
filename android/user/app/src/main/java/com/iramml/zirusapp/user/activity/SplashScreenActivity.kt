@@ -21,7 +21,7 @@ class SplashScreenActivity : AppCompatActivity() {
         Handler(Looper.getMainLooper()).postDelayed({
             val firebaseAuth = FirebaseAuth.getInstance()
 
-            if (firebaseAuth.uid != null && firebaseAuth.uid != "") {
+            if (firebaseAuth.currentUser != null && firebaseAuth.currentUser!!.uid != "") {
                 AuthFirebaseHelper().getCurrentUser(object: AuthListener.CurrentUserListener {
                     override fun onCompleteListener(user: NormalUser) {
                         Common.currentUser = user
