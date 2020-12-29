@@ -110,6 +110,7 @@ class SOSActivity : AppCompatActivity() {
         requirement.lat = currentLocation.latitude
         requirement.lng = currentLocation.longitude
         requirement.type = "sos"
+        requirement.requirement_num = "sos" + createRandomNumber(8)
         requirement.details.address = address
 
         val currentDateTime = getCurrentDateTime()
@@ -160,5 +161,14 @@ class SOSActivity : AppCompatActivity() {
         val date: Date = Calendar.getInstance().time
         val dateFormat: DateFormat = SimpleDateFormat("yyyy-mm-dd hh:mm:ss")
         return dateFormat.format(date)
+    }
+
+    private fun createRandomNumber(len: Long): String {
+        //check(len <= 18) { "To many digits" }
+        val tLen = Math.pow(10.0, (len - 1).toDouble()).toLong() * 9
+        val number = (Math.random() * tLen).toLong() + Math.pow(10.0, (len - 1).toDouble()).toLong() * 1
+        val tVal = number.toString() + ""
+        //check(tVal.length.toLong() == len) { "The random number '$tVal' is not '$len' digits" }
+        return tVal
     }
 }

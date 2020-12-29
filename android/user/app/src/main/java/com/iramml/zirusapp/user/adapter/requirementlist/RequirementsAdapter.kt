@@ -1,5 +1,6 @@
 package com.iramml.zirusapp.user.adapter.requirementlist
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -18,9 +19,12 @@ class RequirementsAdapter(var context: Context?, private var items: ArrayList<Re
         viewHolder = RequirementViewHolder(view, listener)
         return viewHolder!!
     }
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: RequirementViewHolder, position: Int) {
         val item: Requirement = items[position]
-        viewHolder?.tvTitle?.text = item.id
+        viewHolder?.tvTitle?.text = context!!.getString(R.string.requirement_number) + " " + item.requirement_num
+        viewHolder?.tvDate?.text = item.dateTime
+
     }
 
     override fun getItemCount(): Int {

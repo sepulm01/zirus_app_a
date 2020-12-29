@@ -4,21 +4,16 @@ import android.Manifest
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.text.Editable
 import android.text.TextUtils
-import android.text.TextWatcher
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import com.android.volley.toolbox.HttpResponse
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.database.DatabaseError
-import com.google.gson.Gson
 import com.iramml.zirusapp.user.R
-import com.iramml.zirusapp.user.common.AppConfig
 import com.iramml.zirusapp.user.common.Common
 import com.iramml.zirusapp.user.firebase.RequirementFirebaseHelper
 import com.iramml.zirusapp.user.firebase.RequirementListener
@@ -30,8 +25,6 @@ import com.iramml.zirusapp.user.message.FormMessages
 import com.iramml.zirusapp.user.message.ShowMessage
 import com.iramml.zirusapp.user.model.firebase.Requirement
 import com.iramml.zirusapp.user.model.firebase.RequirementStatusItem
-import com.iramml.zirusapp.user.model.googleapis.PlacesResponse
-import com.iramml.zirusapp.user.model.googleapis.PlacesResult
 import com.iramml.zirusapp.user.util.BitmapUtils
 import com.iramml.zirusapp.user.util.LocationUtil
 import com.iramml.zirusapp.user.util.Utilities
@@ -41,12 +34,9 @@ import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import dmax.dialog.SpotsDialog
 import java.io.IOException
-import java.io.UnsupportedEncodingException
-import java.net.URLEncoder
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class NewRequirementActivity : AppCompatActivity() {
@@ -154,6 +144,7 @@ class NewRequirementActivity : AppCompatActivity() {
         requirement.lat = latSelected
         requirement.lng = lngSelected
         requirement.type = "normal"
+        requirement.requirement_num = "req" + createRandomNumber(8)
         requirement.details.description = etDescription.text.toString()
         requirement.details.address = etAddress.text.toString()
 
@@ -271,6 +262,15 @@ class NewRequirementActivity : AppCompatActivity() {
         super.onStop()
         if (locationUtil != null)
             locationUtil!!.stopUpdateLocation()
+    }
+
+    private fun createRandomNumber(len: Long): String {
+        //check(len <= 18) { "To many digits" }
+        val tLen = Math.pow(10.0, (len - 1).toDouble()).toLong() * 9
+        val number = (Math.random() * tLen).toLong() + Math.pow(10.0, (len - 1).toDouble()).toLong() * 1
+        val tVal = number.toString() + ""
+        //check(tVal.length.toLong() == len) { "The random number '$tVal' is not '$len' digits" }
+        return tVal
     }
 
 }

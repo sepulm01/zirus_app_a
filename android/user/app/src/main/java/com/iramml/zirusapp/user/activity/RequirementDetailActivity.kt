@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.iramml.zirusapp.user.R
@@ -16,6 +17,7 @@ import com.iramml.zirusapp.user.model.firebase.RequirementStatusItem
 
 class RequirementDetailActivity : AppCompatActivity() {
     private lateinit var ivBack: ImageView
+    private lateinit var tvRequirementNumber: TextView
     private lateinit var rvRequirementDetail: RecyclerView
 
     private lateinit var requirementID: String
@@ -34,6 +36,7 @@ class RequirementDetailActivity : AppCompatActivity() {
 
     private fun initViews() {
         ivBack = findViewById(R.id.iv_back)
+        tvRequirementNumber = findViewById(R.id.tv_requirement_number)
         rvRequirementDetail = findViewById(R.id.rv_requirement_status)
         rvRequirementDetail.layoutManager =
                 LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
@@ -51,9 +54,11 @@ class RequirementDetailActivity : AppCompatActivity() {
         requirementFirebaseHelper.getRequirementByID(requirementID, object: RequirementListener.GetRequirementListener {
             override fun onSuccess(requirementDetails: Requirement) {
                 implementRequirementStatus(requirementDetails.statusItems)
+                tvRequirementNumber.text = requirementDetails.requirement_num
             }
 
         })
+
     }
 
     private fun implementRequirementStatus(statusItems: ArrayList<RequirementStatusItem>) {
