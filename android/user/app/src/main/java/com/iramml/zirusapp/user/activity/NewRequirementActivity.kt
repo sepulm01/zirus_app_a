@@ -1,9 +1,12 @@
 package com.iramml.zirusapp.user.activity
 
 import android.Manifest
+import android.R.attr
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.text.TextUtils
 import android.view.View
 import android.widget.Button
@@ -55,7 +58,7 @@ class NewRequirementActivity : AppCompatActivity() {
     private val PICK_IMAGE_REQUEST = 2002
     private var latSelected: Double = -1.0
     private var lngSelected: Double = -1.0
-    private var requirementImgUri: Uri? = null
+    private var requirementImgBitmap: Bitmap? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -134,7 +137,7 @@ class NewRequirementActivity : AppCompatActivity() {
             return
         }
 
-        if (requirementImgUri != null && TextUtils.isEmpty(requirementImgUri.toString())) {
+        if (requirementImgBitmap == null) {
             ShowMessage.messageForm(root, this@NewRequirementActivity, FormMessages.SELECT_PHOTO)
             return
         }
@@ -169,7 +172,7 @@ class NewRequirementActivity : AppCompatActivity() {
         val requirementFirebaseHelper = RequirementFirebaseHelper()
         requirementFirebaseHelper.createNormalRequirement(
                 requirement,
-                requirementImgUri!!,
+                requirementImgBitmap!!,
                 object : RequirementListener.CreateNormalRequirementListener {
                     override fun onSuccessListener() {
                         waitingDialog.dismiss()
@@ -211,14 +214,19 @@ class NewRequirementActivity : AppCompatActivity() {
 
     private fun chooseImage() {
         Dexter.withContext(this)
-                .withPermissions(Manifest.permission.READ_EXTERNAL_STORAGE)
+                .withPermissions(Manifest.permission.CAMERA)
                 .withListener(object : MultiplePermissionsListener {
                     override fun onPermissionsChecked(report: MultiplePermissionsReport) {
                         if (report.areAllPermissionsGranted()) {
-                            val intent = Intent(Intent.ACTION_PICK)
-                            intent.type = "image/*"
-                            intent.action = Intent.ACTION_GET_CONTENT
-                            startActivityForResult(intent, PICK_IMAGE_REQUEST)
+
+//                          val intent = Intent(Intent.ACTION_PICK)
+//                          intent.type = "image/*"
+//                          intent.action = Intent.ACTION_GET_CONTENT
+//                          startActivityForResult(intent, PICK_IMAGE_REQUEST)
+
+                            val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                            startActivityForResult(cameraIntent, PICK_IMAGE_REQUEST)
+
                         }
                     }
 
@@ -247,10 +255,13 @@ class NewRequirementActivity : AppCompatActivity() {
                 }
             }
         }
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.data != null) {
-            requirementImgUri = data.data
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK /*&& data != null && data.data != null*/) {
+            //requirementImgUri = data.data
+
             try {
-                val bitmap = BitmapUtils().getBitmapFromGallery(this, requirementImgUri, 750, 750)
+                //val bitmap = BitmapUtils().getBitmapFromGallery(this, requirementImgUri, 750, 750)
+                val bitmap: Bitmap = data!!.extras?.get("data") as Bitmap
+                requirementImgBitmap = bitmap
                 ivPhoto.setImageBitmap(bitmap)
             } catch (e: IOException) {
                 e.printStackTrace()

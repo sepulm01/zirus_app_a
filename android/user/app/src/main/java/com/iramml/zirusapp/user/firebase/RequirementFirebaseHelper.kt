@@ -1,12 +1,13 @@
 package com.iramml.zirusapp.user.firebase
 
-import android.net.Uri
+import android.graphics.Bitmap
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.iramml.zirusapp.user.common.Common
 import com.iramml.zirusapp.user.model.firebase.Requirement
+import java.io.ByteArrayOutputStream
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -26,11 +27,16 @@ class RequirementFirebaseHelper {
         allRequirementsReference = firebaseDatabase.getReference(Common.AllRequirementsTable)
     }
 
-    fun createNormalRequirement(requirement: Requirement, requirementImgUri: Uri,
+    fun createNormalRequirement(requirement: Requirement, requirementImg: Bitmap,
                                 createNormalRequirementListener: RequirementListener.CreateNormalRequirementListener) {
         val imageName: String = UUID.randomUUID().toString()
         val imageFolder: StorageReference = firebaseStorage.reference.child("requirement/images/$imageName")
-        imageFolder.putFile(requirementImgUri)
+
+        val stream = ByteArrayOutputStream()
+        requirementImg.compress(Bitmap.CompressFormat.PNG, 100, stream)
+        val byteArray: ByteArray = stream.toByteArray()
+        requirementImg.recycle()
+        imageFolder.putBytes(byteArray)
             .addOnSuccessListener {
                 imageFolder.downloadUrl.addOnSuccessListener { uri ->
                     requirement.details.image = uri.toString()
@@ -46,7 +52,7 @@ class RequirementFirebaseHelper {
                                           createNormalRequirementListener: RequirementListener.CreateNormalRequirementListener) {
         allRequirementsReference
             .push()
-            .setValue(requirement, object: DatabaseReference.CompletionListener {
+            .setValue(requirement, object : DatabaseReference.CompletionListener {
                 override fun onComplete(error: DatabaseError?, ref: DatabaseReference) {
                     if (error != null) {
                         createNormalRequirementListener.onRegisterReferenceDetailsFailure(error)
@@ -55,14 +61,14 @@ class RequirementFirebaseHelper {
 
                     val requirementID = ref.key
                     requirementUserReference
-                        .child(firebaseAuth.currentUser!!.uid)
-                        .push()
-                        .setValue(requirementID)
-                        .addOnSuccessListener {
-                            createNormalRequirementListener.onSuccessListener()
-                        }.addOnFailureListener {
-                            createNormalRequirementListener.onRegisterReferenceListFailure(it)
-                        }
+                            .child(firebaseAuth.currentUser!!.uid)
+                            .push()
+                            .setValue(requirementID)
+                            .addOnSuccessListener {
+                                createNormalRequirementListener.onSuccessListener()
+                            }.addOnFailureListener {
+                                createNormalRequirementListener.onRegisterReferenceListFailure(it)
+                            }
                 }
 
             })
@@ -72,7 +78,7 @@ class RequirementFirebaseHelper {
                              createNormalRequirementListener: RequirementListener.CreateSOSRequirementListener) {
         allRequirementsReference
             .push()
-            .setValue(requirement, object: DatabaseReference.CompletionListener {
+            .setValue(requirement, object : DatabaseReference.CompletionListener {
                 override fun onComplete(error: DatabaseError?, ref: DatabaseReference) {
                     if (error != null) {
                         createNormalRequirementListener.onRegisterReferenceDetailsFailure(error)
@@ -81,14 +87,14 @@ class RequirementFirebaseHelper {
 
                     val requirementID = ref.key
                     requirementUserReference
-                        .child(firebaseAuth.currentUser!!.uid)
-                        .push()
-                        .setValue(requirementID)
-                        .addOnSuccessListener {
-                            createNormalRequirementListener.onSuccessListener()
-                        }.addOnFailureListener {
-                            createNormalRequirementListener.onRegisterReferenceListFailure(it)
-                        }
+                            .child(firebaseAuth.currentUser!!.uid)
+                            .push()
+                            .setValue(requirementID)
+                            .addOnSuccessListener {
+                                createNormalRequirementListener.onSuccessListener()
+                            }.addOnFailureListener {
+                                createNormalRequirementListener.onRegisterReferenceListFailure(it)
+                            }
                 }
 
             })
@@ -96,31 +102,31 @@ class RequirementFirebaseHelper {
 
     fun getRequirements(getRequirementsListener: RequirementListener.GetRequirementsListener) {
         val requirements = ArrayList<Requirement>()
-        getRequirementIDs(object: RequirementListener.GetRequirementsIDListener {
+        getRequirementIDs(object : RequirementListener.GetRequirementsIDListener {
             override fun onSuccess(requirementsID: ArrayList<String>) {
                 requirements.clear()
                 requirementsID.forEach {
                     allRequirementsReference
-                        .child(it)
-                        .addValueEventListener(object: ValueEventListener {
-                            override fun onDataChange(snapshot: DataSnapshot) {
-                                val requirement = snapshot.getValue(Requirement::class.java)
-                                if (requirement != null) {
-                                    requirement.id = snapshot.key!!
-                                    requirements.add(requirement)
+                            .child(it)
+                            .addValueEventListener(object : ValueEventListener {
+                                override fun onDataChange(snapshot: DataSnapshot) {
+                                    val requirement = snapshot.getValue(Requirement::class.java)
+                                    if (requirement != null) {
+                                        requirement.id = snapshot.key!!
+                                        requirements.add(requirement)
+                                    }
+                                    requirements.sortBy { requirementItem ->
+                                        requirementItem.id
+                                    }
+                                    requirements.reverse()
+                                    getRequirementsListener.onSuccess(requirements)
+
                                 }
-                                requirements.sortBy { requirementItem ->
-                                    requirementItem.id
+
+                                override fun onCancelled(error: DatabaseError) {
+
                                 }
-                                requirements.reverse()
-                                getRequirementsListener.onSuccess(requirements)
-
-                            }
-
-                            override fun onCancelled(error: DatabaseError) {
-
-                            }
-                        })
+                            })
                 }
 
             }
@@ -132,7 +138,7 @@ class RequirementFirebaseHelper {
         val requirementsID = ArrayList<String>()
         requirementUserReference
             .child(firebaseAuth.currentUser!!.uid)
-            .addValueEventListener(object: ValueEventListener {
+            .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     snapshot.children.forEach {
                         val requirementID = it.getValue(String::class.java)
@@ -154,7 +160,7 @@ class RequirementFirebaseHelper {
     fun getRequirementByID(requirementID: String, getRequirementListener: RequirementListener.GetRequirementListener) {
         allRequirementsReference
                 .child(requirementID)
-                .addValueEventListener(object: ValueEventListener {
+                .addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         val requirement = snapshot.getValue(Requirement::class.java)
 
