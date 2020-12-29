@@ -4,55 +4,62 @@
 
     <string name="btn_continue">Continue</string>
 
+    <string name="choose_location">Choose Location</string>
+
+    <string name="confirm">Confirm</string>
+
+    <string name="create">Create</string>
+
+    <string name="current_location">Current Location</string>
+
     <string name="do_not_have_account">Do not have account?</string>
+
+    <string name="enter_address">Enter address</string>
 
     <string name="et_address">Address</string>
     <string name="et_description">Description</string>
     <string name="et_email">Email</string>
     <string name="et_first_name">First Name</string>
-    <string name="et_phone">Phone</string>
-    <string name="et_rut">RUT</string>
     <string name="et_last_name">Last Name</string>
     <string name="et_name">Name</string>
     <string name="et_password">Password</string>
+    <string name="et_phone">Phone</string>
+    <string name="et_rut">RUT</string>
 
     <string name="failed">Failed</string>
-    <string name="create">Create</string>
-    <string name="current_location">Current Location</string>
-    <string name="choose_location">Choose Location</string>
 
     <string name="insert_address">Please, insert address</string>
     <string name="insert_description">Please, insert description</string>
     <string name="insert_email">Please, insert email</string>
     <string name="insert_first_name">Please, insert first name</string>
-    <string name="insert_phone">Please, insert phone</string>
-    <string name="insert_rut">Please, insert RUT</string>
     <string name="insert_last_name">Please, insert last name</string>
     <string name="insert_name">Please, insert name</string>
     <string name="insert_password">Please, insert password</string>
+    <string name="insert_phone">Please, insert phone</string>
+    <string name="insert_rut">Please, insert RUT</string>
 
     <string name="my_requirements">My requirements</string>
-    <string name="requirement_number">Requirement Number:</string>
 
-    <string name="confirm">Confirm</string>
-    <string name="sos_distress_call">A distress call will be made from your current location</string>
-    <string name="sos_distress_call_done">Call for help made, a telephone operator will contact you shortly to acquire more information</string>
     <string name="new_requirement">New requirement</string>
-    <string name="requirement_detail">Requirement Details</string>
 
     <string name="permission_denied">Permission denied</string>
     <string name="permission_denied_location">Permission is required to obtain location</string>
 
+    <string name="please_give_location_permission">Please, give location permission to continue</string>
+
     <string name="request_sent">Request sent</string>
 
+    <string name="requirement_detail">Requirement Details</string>
+    <string name="requirement_number">Requirement Number:</string>
+
     <string name="select_photo">Please, select photo</string>
-    <string name="enter_address">Enter address</string>
 
     <string name="sign_in">Sign In</string>
     <string name="sign_up">Sign Up</string>
 
     <string name="sos">SOS</string>
-    <string name="please_give_location_permission">Please, give location permission to continue</string>
+    <string name="sos_distress_call">A distress call will be made from your current location</string>
+    <string name="sos_distress_call_done">Call for help made, a telephone operator will contact you shortly to acquire more information</string>
 
     <string name="title_activity_new_location">Map</string>
 

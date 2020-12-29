@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Zirus</string>
+
+    <string name="btn_continue">Continuar</string>
+
+    <string name="choose_location">Elegir Localización</string>
+
+    <string name="confirm">Confirmar</string>
+
+    <string name="create">Crear</string>
+
+    <string name="current_location">Localización Actual</string>
+
+    <string name="do_not_have_account">¿No tienes una cuenta?</string>
+
+    <string name="enter_address">Inserta Dirección</string>
+
+    <string name="et_address">Dirección</string>
+    <string name="et_description">Descripción</string>
+    <string name="et_email">Correo</string>
+    <string name="et_first_name">Nombre</string>
+    <string name="et_last_name">Apellido</string>
+    <string name="et_name">Nombre</string>
+    <string name="et_password">Contraseña</string>
+    <string name="et_phone">Teléfono</string>
+    <string name="et_rut">RUT</string>
+
+    <string name="failed">Fallo</string>
+
+    <string name="insert_address">Por favor, inserta dirección</string>
+    <string name="insert_description">Por favor, inserta descripción</string>
+    <string name="insert_email">Por favor, inserta correo</string>
+    <string name="insert_first_name">Por favor, inserta nombre</string>
+    <string name="insert_last_name">Por favor, inserta apellido</string>
+    <string name="insert_name">Por favor, inserta nombre</string>
+    <string name="insert_password">Por favor, inserta contraseña</string>
+    <string name="insert_phone">Por favor, inserta teléfono</string>
+    <string name="insert_rut">Por favor, inserta RUT</string>
+
+    <string name="my_requirements">Mis requerimientos</string>
+
+    <string name="new_requirement">Nuevos requerimientos</string>
+
+    <string name="permission_denied">Permiso denegado</string>
+    <string name="permission_denied_location">El permiso es necesario para obtener la localización</string>
+
+    <string name="please_give_location_permission">Por favor, da el permiso de localización para continuar</string>
+
+    <string name="request_sent">Petición enviada</string>
+
+    <string name="requirement_detail">Detalles del requerimientos</string>
+    <string name="requirement_number">Requerimiento número:</string>
+
+    <string name="select_photo">Por favor, selecciona una foto</string>
+
+    <string name="sign_in">Iniciar Sesión</string>
+    <string name="sign_up">Registrarse</string>
+
+    <string name="sos">SOS</string>
+    <string name="sos_distress_call">Se va a hacer una llamada de auxilio desde su ubicación actual.</string>
+    <string name="sos_distress_call_done">Llamada de auxilio realizada, un operador telefónico se comunicará a la brevedad para inquirir más información.</string>
+
+    <string name="title_activity_new_location">Mapa</string>
+
+    <string name="upload_photo">Subir una foto</string>
+
+    <string name="welcome_comma">Welcome, </string>
+</resources>
