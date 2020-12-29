@@ -43,7 +43,7 @@ class NewLocationActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var etAddress: EditText
     private lateinit var etSearchAddress: EditText
     private lateinit var btnConfirm: Button
-    private lateinit var mMap: GoogleMap
+    private lateinit var googleMap: GoogleMap
     private var location: LocationUtil? = null
 
     private var locationMarker: Marker? = null
@@ -72,14 +72,14 @@ class NewLocationActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
-        mMap = googleMap
-        mMap.uiSettings.isZoomControlsEnabled = true
-        mMap.uiSettings.isZoomGesturesEnabled = true
-        mMap.setInfoWindowAdapter(CustomInfoWindow(this))
+        this.googleMap = googleMap
+        this.googleMap.uiSettings.isZoomControlsEnabled = true
+        this.googleMap.uiSettings.isZoomGesturesEnabled = false
+        this.googleMap.setInfoWindowAdapter(CustomInfoWindow(this))
 
 
-        mMap.setOnMapClickListener {
-            setLocation(mMap.cameraPosition.target)
+        this.googleMap.setOnMapClickListener {
+            setLocation(this@NewLocationActivity.googleMap.cameraPosition.target)
         }
 
     }
@@ -141,12 +141,12 @@ class NewLocationActivity : AppCompatActivity(), OnMapReadyCallback {
                     btnConfirm.isEnabled = true
                     isFirstCurrentLocation = false
                     locationSelected = location
-                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(location, 15.0f))
-                    locationMarker = mMap.addMarker(
+                    googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(location, 15.0f))
+                    locationMarker = googleMap.addMarker(
                             MarkerOptions().position(location)
                     )
                 }
-                mMap.isMyLocationEnabled = true
+                googleMap.isMyLocationEnabled = true
             }
 
         })
@@ -231,9 +231,9 @@ class NewLocationActivity : AppCompatActivity(), OnMapReadyCallback {
 
         locationSelected = location
         getAddressByLatLng(locationSelected)
-        locationMarker = mMap.addMarker(
+        locationMarker = googleMap.addMarker(
                 MarkerOptions().position(location)
         )
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(location, 15.0f))
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(location, 15.0f))
     }
 }
