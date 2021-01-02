@@ -41,7 +41,7 @@ class HomeActivity : AppCompatActivity() {
         }
 
         btnNewRequirement.setOnClickListener {
-            startActivity(Intent(this@HomeActivity, NewRequirementActivity::class.java))
+            startActivity(Intent(this@HomeActivity, NewLocationActivity::class.java))
         }
 
         btnMyRequirements.setOnClickListener {

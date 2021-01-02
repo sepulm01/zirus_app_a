@@ -8,10 +8,10 @@ import android.text.TextWatcher
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.location.LocationResult
@@ -36,6 +36,7 @@ import java.net.URLEncoder
 
 class NewLocationActivity : AppCompatActivity(), OnMapReadyCallback {
 
+    private lateinit var llLocationMarker: LinearLayout
     private lateinit var clSearchLocation: ConstraintLayout
     private lateinit var cvSearchLocation: CardView
     private lateinit var cvBack: CardView
@@ -52,6 +53,7 @@ class NewLocationActivity : AppCompatActivity(), OnMapReadyCallback {
     private var locationSelected = LatLng(-1.0, -1.0)
     private var locationStr: String = ""
     private var isFirstCurrentLocation: Boolean = true
+    private var isFirstLoad: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,30 +63,8 @@ class NewLocationActivity : AppCompatActivity(), OnMapReadyCallback {
         initListeners()
     }
 
-    override fun onStart() {
-        super.onStart()
-        location!!.initializeLocation()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        location!!.stopUpdateLocation()
-    }
-
-    override fun onMapReady(googleMap: GoogleMap) {
-        this.googleMap = googleMap
-        this.googleMap.uiSettings.isZoomControlsEnabled = true
-        this.googleMap.uiSettings.isZoomGesturesEnabled = false
-        this.googleMap.setInfoWindowAdapter(CustomInfoWindow(this))
-
-
-        this.googleMap.setOnMapClickListener {
-            setLocation(this@NewLocationActivity.googleMap.cameraPosition.target)
-        }
-
-    }
-
     private fun initViews() {
+        llLocationMarker = findViewById(R.id.ll_location_marker)
         clSearchLocation = findViewById(R.id.cl_search_location)
         cvSearchLocation = findViewById(R.id.cv_search_location)
         cvBack = findViewById(R.id.cv_back)
@@ -101,19 +81,16 @@ class NewLocationActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private fun initListeners() {
         cvBack.setOnClickListener {
-            val returnIntent = Intent()
-            setResult(RESULT_CANCELED, returnIntent)
             finish()
         }
 
         btnConfirm.setOnClickListener {
             if (locationSelected.latitude != -1.0 && locationSelected.longitude != -1.0) {
-                val returnIntent = Intent()
-                returnIntent.putExtra("lat", locationSelected.latitude)
-                returnIntent.putExtra("lng", locationSelected.longitude)
-                returnIntent.putExtra("address", locationStr)
-                setResult(RESULT_OK, returnIntent)
-                finish()
+                val intent = Intent(this, NewRequirementActivity::class.java)
+                intent.putExtra("lat", locationSelected.latitude)
+                intent.putExtra("lng", locationSelected.longitude)
+                intent.putExtra("address", locationStr)
+                startActivity(intent)
             }
 
         }
@@ -137,13 +114,17 @@ class NewLocationActivity : AppCompatActivity(), OnMapReadyCallback {
                         response.lastLocation.longitude
                 )
                 getAddressByLatLng(location)
+
                 if (isFirstCurrentLocation) {
                     btnConfirm.isEnabled = true
                     isFirstCurrentLocation = false
                     locationSelected = location
-                    googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(location, 15.0f))
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 15.0f))
+                    //googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(location, 15.0f))
                     locationMarker = googleMap.addMarker(
-                            MarkerOptions().position(location)
+                            MarkerOptions()
+                                    .position(location)
+                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.pin))
                     )
                 }
                 googleMap.isMyLocationEnabled = true
@@ -179,6 +160,48 @@ class NewLocationActivity : AppCompatActivity(), OnMapReadyCallback {
 
             override fun afterTextChanged(s: Editable) {}
         })
+    }
+
+    override fun onStart() {
+        super.onStart()
+        location!!.initializeLocation()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        location!!.stopUpdateLocation()
+    }
+
+    override fun onMapReady(googleMap: GoogleMap) {
+        this.googleMap = googleMap
+        this.googleMap.uiSettings.isZoomControlsEnabled = true
+        this.googleMap.uiSettings.isZoomGesturesEnabled = false
+        this.googleMap.setInfoWindowAdapter(CustomInfoWindow(this))
+
+
+        this.googleMap.setOnMapClickListener {
+            setLocation(this@NewLocationActivity.googleMap.cameraPosition.target)
+        }
+
+        this.googleMap.setOnCameraIdleListener {
+            if (llLocationMarker.visibility == View.VISIBLE) {
+                llLocationMarker.visibility = View.GONE
+
+                if (!isFirstLoad) {
+                    setLocation(this.googleMap.cameraPosition.target)
+                } else {
+                    isFirstLoad = false
+                }
+            }
+        }
+
+        this.googleMap.setOnCameraMoveListener {
+            if (locationMarker != null)
+                locationMarker?.remove()
+
+            if (llLocationMarker.visibility == View.GONE)
+                llLocationMarker.visibility = View.VISIBLE
+        }
     }
 
     private fun toggleSearchLocation() {
@@ -226,13 +249,16 @@ class NewLocationActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private fun setLocation(location: LatLng) {
         btnConfirm.isEnabled = true
+
         if (locationMarker != null)
             locationMarker!!.remove()
 
         locationSelected = location
         getAddressByLatLng(locationSelected)
         locationMarker = googleMap.addMarker(
-                MarkerOptions().position(location)
+                MarkerOptions()
+                        .position(location)
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.pin))
         )
         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(location, 15.0f))
     }
