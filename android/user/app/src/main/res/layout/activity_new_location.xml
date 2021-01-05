@@ -47,17 +47,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/cv_back"
         app:layout_constraintTop_toTopOf="parent">
-
-        <EditText
-            android:id="@+id/et_address"
+        <TextView
+            android:id="@+id/tv_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
+            android:hint="@string/et_address"
             android:lines="1"
             android:maxLines="1"
             android:singleLine="true"
-            android:ellipsize="end"
-            android:hint="@string/et_address" />
+            android:ellipsize="end"/>
     </androidx.cardview.widget.CardView>
 
     <LinearLayout

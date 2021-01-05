@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -41,7 +42,7 @@ class NewLocationActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var cvSearchLocation: CardView
     private lateinit var cvBack: CardView
     private lateinit var rvPlaces: RecyclerView
-    private lateinit var etAddress: EditText
+    private lateinit var tvAddress: TextView
     private lateinit var etSearchAddress: EditText
     private lateinit var btnConfirm: Button
     private lateinit var googleMap: GoogleMap
@@ -68,7 +69,7 @@ class NewLocationActivity : AppCompatActivity(), OnMapReadyCallback {
         clSearchLocation = findViewById(R.id.cl_search_location)
         cvSearchLocation = findViewById(R.id.cv_search_location)
         cvBack = findViewById(R.id.cv_back)
-        etAddress = findViewById(R.id.et_address)
+        tvAddress = findViewById(R.id.tv_address)
         rvPlaces = findViewById(R.id.rv_places)
         rvPlaces.layoutManager =
                 LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
@@ -95,10 +96,8 @@ class NewLocationActivity : AppCompatActivity(), OnMapReadyCallback {
 
         }
 
-        etAddress.setOnFocusChangeListener { v, hasFocus ->
-            if (hasFocus) {
-                toggleSearchLocation()
-            }
+        tvAddress.setOnClickListener {
+            toggleSearchLocation()
         }
 
         cvSearchLocation.setOnClickListener(View.OnClickListener {
@@ -172,6 +171,11 @@ class NewLocationActivity : AppCompatActivity(), OnMapReadyCallback {
         location!!.stopUpdateLocation()
     }
 
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        location!!.onRequestPermissionResult(requestCode, permissions, grantResults)
+    }
+
     override fun onMapReady(googleMap: GoogleMap) {
         this.googleMap = googleMap
         this.googleMap.uiSettings.isZoomControlsEnabled = true
@@ -226,7 +230,7 @@ class NewLocationActivity : AppCompatActivity(), OnMapReadyCallback {
 
                         val locationClicked = LatLng(lat, lng)
                         setLocation(locationClicked)
-                        etAddress.setText(placesList[index].formatted_address)
+                        tvAddress.text = placesList[index].formatted_address
                         toggleSearchLocation()
                     }
                 }
@@ -241,7 +245,7 @@ class NewLocationActivity : AppCompatActivity(), OnMapReadyCallback {
                 object : GoogleAPIsListener.GetAddressByLatLngListener {
                     override fun onRequestResult(address: String) {
                         locationStr = address
-                        etAddress.setText(address)
+                        tvAddress.text = address
                     }
                 }
         )
