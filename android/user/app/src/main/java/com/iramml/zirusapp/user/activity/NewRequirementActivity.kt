@@ -1,51 +1,34 @@
 package com.iramml.zirusapp.user.activity
 
 import android.Manifest
-import android.R.attr
 import android.content.Intent
 import android.graphics.Bitmap
-import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.text.Editable
 import android.text.TextUtils
-import android.text.TextWatcher
 import android.view.View
 import android.widget.Button
-import android.widget.EditText
+import android.widget.GridLayout
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.cardview.widget.CardView
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.gms.location.LocationResult
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.database.DatabaseError
+import com.google.gson.Gson
 import com.iramml.zirusapp.user.R
 import com.iramml.zirusapp.user.adapter.ClickListener
-import com.iramml.zirusapp.user.adapter.placeslist.PlacesAdapter
+import com.iramml.zirusapp.user.adapter.categorylist.CategoriesAdapter
 import com.iramml.zirusapp.user.common.Common
-import com.iramml.zirusapp.user.firebase.RequirementFirebaseHelper
-import com.iramml.zirusapp.user.firebase.RequirementListener
+import com.iramml.zirusapp.user.model.RequirementFirebaseModel
+import com.iramml.zirusapp.user.model.RequirementListener
 import com.iramml.zirusapp.user.helper.GoogleAPIHelper
-import com.iramml.zirusapp.user.helper.GoogleAPIsListener
-import com.iramml.zirusapp.user.listener.LocationListener
 import com.iramml.zirusapp.user.message.Errors
 import com.iramml.zirusapp.user.message.FormMessages
 import com.iramml.zirusapp.user.message.ShowMessage
-import com.iramml.zirusapp.user.model.firebase.Requirement
-import com.iramml.zirusapp.user.model.firebase.RequirementStatusItem
-import com.iramml.zirusapp.user.model.googleapis.PlacesResponse
-import com.iramml.zirusapp.user.model.googleapis.PlacesResult
-import com.iramml.zirusapp.user.util.BitmapUtils
+import com.iramml.zirusapp.user.model.schema.firebase.Requirement
+import com.iramml.zirusapp.user.model.schema.firebase.RequirementCategory
+import com.iramml.zirusapp.user.model.schema.firebase.RequirementStatusItem
 import com.iramml.zirusapp.user.util.LocationUtil
 import com.iramml.zirusapp.user.util.Utilities
 import com.karumi.dexter.Dexter
@@ -54,8 +37,6 @@ import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import dmax.dialog.SpotsDialog
 import java.io.IOException
-import java.io.UnsupportedEncodingException
-import java.net.URLEncoder
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -68,17 +49,16 @@ class NewRequirementActivity : AppCompatActivity() {
     private lateinit var ivPhoto: ImageView
     private lateinit var btnCreate: Button
 
-    private var locationMarker: Marker? = null
-
     private var locationUtil: LocationUtil? = null
     private lateinit var googleAPIHelper: GoogleAPIHelper
 
+    private var requirementImgBitmap: Bitmap? = null
     private val PICK_IMAGE_REQUEST = 2002
+
     private var latSelected: Double = -1.0
     private var lngSelected: Double = -1.0
     private var address: String = ""
-    private var locationChile = LatLng(-21.995569, -69.2150163)
-    private var requirementImgBitmap: Bitmap? = null
+    private var requirementCategory: RequirementCategory = RequirementCategory()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -90,6 +70,11 @@ class NewRequirementActivity : AppCompatActivity() {
             latSelected = intent.getDoubleExtra("lat", -0.1)
             lngSelected = intent.getDoubleExtra("lng", -0.1)
             address = intent.getStringExtra("address").toString()
+            requirementCategory = Gson()
+                    .fromJson(
+                            intent.getStringExtra("category").toString(),
+                            RequirementCategory::class.java
+                    )
         } else
             finish()
     }
@@ -139,6 +124,7 @@ class NewRequirementActivity : AppCompatActivity() {
         requirement.requirement_num = "req" + createRandomNumber(8)
         requirement.details.description = etDescription.text.toString()
         requirement.details.address = address
+        requirement.category = requirementCategory
 
         val date: Date = Calendar.getInstance().time
         val dateFormat: DateFormat = SimpleDateFormat("yyyy-mm-dd hh:mm:ss")
@@ -158,8 +144,8 @@ class NewRequirementActivity : AppCompatActivity() {
     private fun createRequirement(requirement: Requirement) {
         val waitingDialog = SpotsDialog.Builder().setContext(this).build()
         waitingDialog.show()
-        val requirementFirebaseHelper = RequirementFirebaseHelper()
-        requirementFirebaseHelper.createNormalRequirement(
+        val requirementFirebaseModel = RequirementFirebaseModel()
+        requirementFirebaseModel.createNormalRequirement(
                 requirement,
                 requirementImgBitmap!!,
                 object : RequirementListener.CreateNormalRequirementListener {

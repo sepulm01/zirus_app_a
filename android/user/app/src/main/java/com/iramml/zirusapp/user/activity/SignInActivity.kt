@@ -11,11 +11,11 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.database.DatabaseError
 import com.iramml.zirusapp.user.R
 import com.iramml.zirusapp.user.common.Common
-import com.iramml.zirusapp.user.firebase.AuthFirebaseHelper
-import com.iramml.zirusapp.user.firebase.AuthListener
+import com.iramml.zirusapp.user.model.AuthFirebaseModel
+import com.iramml.zirusapp.user.model.AuthListener
 import com.iramml.zirusapp.user.message.FormMessages
 import com.iramml.zirusapp.user.message.ShowMessage
-import com.iramml.zirusapp.user.model.firebase.NormalUser
+import com.iramml.zirusapp.user.model.schema.firebase.NormalUser
 import com.iramml.zirusapp.user.util.Utilities
 import dmax.dialog.SpotsDialog
 import java.lang.Exception
@@ -69,7 +69,7 @@ class SignInActivity : AppCompatActivity() {
         val waitingDialog = SpotsDialog.Builder().setContext(this).build()
         waitingDialog.show()
 
-        AuthFirebaseHelper().signIn(etEmail.text.toString(), etPassword.text.toString(), object: AuthListener.SignInListener {
+        AuthFirebaseModel().signIn(etEmail.text.toString(), etPassword.text.toString(), object: AuthListener.SignInListener {
             override fun onCompleteListener(user: NormalUser) {
                 waitingDialog.dismiss()
                 Common.currentUser = user

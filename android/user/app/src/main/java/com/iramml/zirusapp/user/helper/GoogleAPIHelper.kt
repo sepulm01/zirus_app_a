@@ -3,13 +3,12 @@ package com.iramml.zirusapp.user.helper
 import android.content.Context
 import android.util.Log
 import com.android.volley.VolleyError
-import com.android.volley.toolbox.HttpResponse
 import com.google.android.gms.maps.model.LatLng
 import com.google.gson.Gson
 import com.iramml.zirusapp.user.common.AppConfig
 import com.iramml.zirusapp.user.listener.HttpResponseListener
 import com.iramml.zirusapp.user.model.GeoCodingResult
-import com.iramml.zirusapp.user.model.googleapis.PlacesResponse
+import com.iramml.zirusapp.user.model.schema.googleapis.PlacesResponse
 import com.iramml.zirusapp.user.util.NetworkUtil
 
 

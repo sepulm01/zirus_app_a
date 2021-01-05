@@ -1,4 +1,4 @@
-package com.iramml.zirusapp.user.model.firebase
+package com.iramml.zirusapp.user.model.schema.firebase
 
 data class NormalUser (
     var firstName: String = "",

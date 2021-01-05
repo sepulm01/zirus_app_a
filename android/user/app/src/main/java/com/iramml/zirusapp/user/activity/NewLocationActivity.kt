@@ -27,8 +27,8 @@ import com.iramml.zirusapp.user.helper.CustomInfoWindow
 import com.iramml.zirusapp.user.helper.GoogleAPIHelper
 import com.iramml.zirusapp.user.helper.GoogleAPIsListener
 import com.iramml.zirusapp.user.listener.LocationListener
-import com.iramml.zirusapp.user.model.googleapis.PlacesResponse
-import com.iramml.zirusapp.user.model.googleapis.PlacesResult
+import com.iramml.zirusapp.user.model.schema.googleapis.PlacesResponse
+import com.iramml.zirusapp.user.model.schema.googleapis.PlacesResult
 import com.iramml.zirusapp.user.util.LocationUtil
 import java.io.UnsupportedEncodingException
 import java.net.URLEncoder
@@ -86,7 +86,7 @@ class NewLocationActivity : AppCompatActivity(), OnMapReadyCallback {
 
         btnConfirm.setOnClickListener {
             if (locationSelected.latitude != -1.0 && locationSelected.longitude != -1.0) {
-                val intent = Intent(this, NewRequirementActivity::class.java)
+                val intent = Intent(this, ChooseRequirementCategoryActivity::class.java)
                 intent.putExtra("lat", locationSelected.latitude)
                 intent.putExtra("lng", locationSelected.longitude)
                 intent.putExtra("address", locationStr)

@@ -12,16 +12,16 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.database.DatabaseError
 import com.iramml.zirusapp.user.R
 import com.iramml.zirusapp.user.common.Common
-import com.iramml.zirusapp.user.firebase.RequirementFirebaseHelper
-import com.iramml.zirusapp.user.firebase.RequirementListener
+import com.iramml.zirusapp.user.model.RequirementFirebaseModel
+import com.iramml.zirusapp.user.model.RequirementListener
 import com.iramml.zirusapp.user.helper.GoogleAPIHelper
 import com.iramml.zirusapp.user.helper.GoogleAPIsListener
 import com.iramml.zirusapp.user.listener.LocationListener
 import com.iramml.zirusapp.user.message.Errors
 import com.iramml.zirusapp.user.message.Messages
 import com.iramml.zirusapp.user.message.ShowMessage
-import com.iramml.zirusapp.user.model.firebase.Requirement
-import com.iramml.zirusapp.user.model.firebase.RequirementStatusItem
+import com.iramml.zirusapp.user.model.schema.firebase.Requirement
+import com.iramml.zirusapp.user.model.schema.firebase.RequirementStatusItem
 import com.iramml.zirusapp.user.util.LocationUtil
 import com.iramml.zirusapp.user.util.Utilities
 import dmax.dialog.SpotsDialog
@@ -123,8 +123,8 @@ class SOSActivity : AppCompatActivity() {
         )
         requirement.statusItems.add(requirementStatusItem)
 
-        val requirementFirebaseHelper = RequirementFirebaseHelper()
-        requirementFirebaseHelper.createSOSRequirement(
+        val requirementFirebaseModel = RequirementFirebaseModel()
+        requirementFirebaseModel.createSOSRequirement(
             requirement,
             object: RequirementListener.CreateSOSRequirementListener {
                 override fun onSuccessListener() {

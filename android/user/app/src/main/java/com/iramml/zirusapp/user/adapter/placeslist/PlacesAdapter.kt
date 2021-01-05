@@ -7,11 +7,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.iramml.zirusapp.user.R
 import com.iramml.zirusapp.user.adapter.ClickListener
-import com.iramml.zirusapp.user.model.firebase.Requirement
-import com.iramml.zirusapp.user.model.googleapis.PlacesResult
+import com.iramml.zirusapp.user.model.schema.googleapis.PlacesResult
 
 
-class PlacesAdapter(var context: Context?, private var items: ArrayList<PlacesResult>, private var listener: ClickListener) : RecyclerView.Adapter<PlacesViewHolder>() {
+class PlacesAdapter(var context: Context?, private var items: List<PlacesResult>, private var listener: ClickListener) : RecyclerView.Adapter<PlacesViewHolder>() {
     private var viewHolder: PlacesViewHolder? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlacesViewHolder {

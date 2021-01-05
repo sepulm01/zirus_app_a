@@ -1,7 +1,8 @@
-package com.iramml.zirusapp.user.firebase
+package com.iramml.zirusapp.user.model
 
 import com.google.firebase.database.DatabaseError
-import com.iramml.zirusapp.user.model.firebase.Requirement
+import com.iramml.zirusapp.user.model.schema.firebase.Requirement
+import com.iramml.zirusapp.user.model.schema.firebase.RequirementCategory
 import java.lang.Exception
 
 interface RequirementListener {
@@ -27,5 +28,9 @@ interface RequirementListener {
 
     interface GetRequirementListener {
         fun onSuccess(requirementDetails: Requirement)
+    }
+
+    interface GetRequirementCategoriesListener {
+        fun onSuccess(requirementCategories: List<RequirementCategory>)
     }
 }

@@ -8,7 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.iramml.zirusapp.user.R
 import com.iramml.zirusapp.user.common.Common
-import com.iramml.zirusapp.user.firebase.AuthFirebaseHelper
+import com.iramml.zirusapp.user.model.AuthFirebaseModel
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var ivLogOut: ImageView
@@ -35,7 +35,7 @@ class HomeActivity : AppCompatActivity() {
 
     private fun initListeners() {
         ivLogOut.setOnClickListener {
-            AuthFirebaseHelper.logout()
+            AuthFirebaseModel.logout()
             startActivity(Intent(this@HomeActivity, SignInActivity::class.java))
             finish()
         }

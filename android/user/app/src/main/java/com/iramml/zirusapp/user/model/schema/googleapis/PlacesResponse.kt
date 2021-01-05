@@ -1,4 +1,4 @@
-package com.iramml.zirusapp.user.model.googleapis
+package com.iramml.zirusapp.user.model.schema.googleapis
 
 class PlacesResponse(
     var results: ArrayList<PlacesResult> = ArrayList()

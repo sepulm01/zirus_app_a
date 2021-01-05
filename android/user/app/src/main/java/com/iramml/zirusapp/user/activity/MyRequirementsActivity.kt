@@ -9,10 +9,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.iramml.zirusapp.user.R
 import com.iramml.zirusapp.user.adapter.requirementlist.RequirementsAdapter
-import com.iramml.zirusapp.user.firebase.RequirementFirebaseHelper
+import com.iramml.zirusapp.user.model.RequirementFirebaseModel
 import com.iramml.zirusapp.user.adapter.ClickListener
-import com.iramml.zirusapp.user.firebase.RequirementListener
-import com.iramml.zirusapp.user.model.firebase.Requirement
+import com.iramml.zirusapp.user.model.RequirementListener
+import com.iramml.zirusapp.user.model.schema.firebase.Requirement
 
 class MyRequirementsActivity : AppCompatActivity() {
     private lateinit var ivBack: ImageView
@@ -41,8 +41,8 @@ class MyRequirementsActivity : AppCompatActivity() {
     }
 
     private fun getData() {
-        val requirementFirebaseHelper = RequirementFirebaseHelper()
-        requirementFirebaseHelper.getRequirements(object: RequirementListener.GetRequirementsListener {
+        val requirementFirebaseModel = RequirementFirebaseModel()
+        requirementFirebaseModel.getRequirements(object: RequirementListener.GetRequirementsListener {
             override fun onSuccess(requirements: ArrayList<Requirement>) {
                 implementRequirementsList(requirements)
             }

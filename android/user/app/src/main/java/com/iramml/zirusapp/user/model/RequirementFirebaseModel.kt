@@ -1,4 +1,4 @@
-package com.iramml.zirusapp.user.firebase
+package com.iramml.zirusapp.user.model
 
 import android.graphics.Bitmap
 import com.google.firebase.auth.FirebaseAuth
@@ -6,15 +6,17 @@ import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.iramml.zirusapp.user.common.Common
-import com.iramml.zirusapp.user.model.firebase.Requirement
+import com.iramml.zirusapp.user.model.schema.firebase.Requirement
+import com.iramml.zirusapp.user.model.schema.firebase.RequirementCategory
 import java.io.ByteArrayOutputStream
 import java.util.*
 import kotlin.collections.ArrayList
 
 
-class RequirementFirebaseHelper {
+class RequirementFirebaseModel {
     private val requirementUserReference: DatabaseReference
     private val allRequirementsReference: DatabaseReference
+    private val requirementCategoryReference: DatabaseReference
     private val firebaseStorage: FirebaseStorage
     private val firebaseAuth: FirebaseAuth
 
@@ -25,6 +27,7 @@ class RequirementFirebaseHelper {
 
         requirementUserReference = firebaseDatabase.getReference(Common.RequirementUserTable)
         allRequirementsReference = firebaseDatabase.getReference(Common.AllRequirementsTable)
+        requirementCategoryReference = firebaseDatabase.getReference(Common.RequirementCategoriesTable)
     }
 
     fun createNormalRequirement(requirement: Requirement, requirementImg: Bitmap,
@@ -175,4 +178,29 @@ class RequirementFirebaseHelper {
 
                 })
     }
+
+    fun getRequirementCategories(getRequirementsListener: RequirementListener.GetRequirementCategoriesListener) {
+        val requirementCategories: ArrayList<RequirementCategory> = ArrayList()
+        requirementCategoryReference
+                .addValueEventListener(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        snapshot.children.forEach { categoryDataSnapshot ->
+                            val requirement = categoryDataSnapshot.getValue(RequirementCategory::class.java)
+
+                            if (requirement != null) {
+                                requirement.id = categoryDataSnapshot.key!!
+                                requirementCategories.add(requirement)
+                            }
+                        }
+
+                        requirementCategoryReference.removeEventListener(this)
+                        getRequirementsListener.onSuccess(requirementCategories)
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+
+                    }
+                })
+    }
+
 }

@@ -10,10 +10,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.iramml.zirusapp.user.R
 import com.iramml.zirusapp.user.adapter.ClickListener
 import com.iramml.zirusapp.user.adapter.requiremetstatuslist.RequirementStatusAdapter
-import com.iramml.zirusapp.user.firebase.RequirementFirebaseHelper
-import com.iramml.zirusapp.user.firebase.RequirementListener
-import com.iramml.zirusapp.user.model.firebase.Requirement
-import com.iramml.zirusapp.user.model.firebase.RequirementStatusItem
+import com.iramml.zirusapp.user.model.RequirementFirebaseModel
+import com.iramml.zirusapp.user.model.RequirementListener
+import com.iramml.zirusapp.user.model.schema.firebase.Requirement
+import com.iramml.zirusapp.user.model.schema.firebase.RequirementStatusItem
 
 class RequirementDetailActivity : AppCompatActivity() {
     private lateinit var ivBack: ImageView
@@ -50,8 +50,8 @@ class RequirementDetailActivity : AppCompatActivity() {
     }
 
     private fun getRequirementDetails() {
-        val requirementFirebaseHelper = RequirementFirebaseHelper()
-        requirementFirebaseHelper.getRequirementByID(requirementID, object: RequirementListener.GetRequirementListener {
+        val requirementFirebaseModel = RequirementFirebaseModel()
+        requirementFirebaseModel.getRequirementByID(requirementID, object: RequirementListener.GetRequirementListener {
             override fun onSuccess(requirementDetails: Requirement) {
                 implementRequirementStatus(requirementDetails.statusItems)
                 tvRequirementNumber.text = requirementDetails.requirement_num

@@ -10,11 +10,11 @@ import androidx.cardview.widget.CardView
 import com.google.android.material.textfield.TextInputEditText
 import com.iramml.zirusapp.user.R
 import com.iramml.zirusapp.user.common.Common
-import com.iramml.zirusapp.user.firebase.AuthFirebaseHelper
-import com.iramml.zirusapp.user.firebase.AuthListener
+import com.iramml.zirusapp.user.model.AuthFirebaseModel
+import com.iramml.zirusapp.user.model.AuthListener
 import com.iramml.zirusapp.user.message.FormMessages
 import com.iramml.zirusapp.user.message.ShowMessage
-import com.iramml.zirusapp.user.model.firebase.NormalUser
+import com.iramml.zirusapp.user.model.schema.firebase.NormalUser
 import com.iramml.zirusapp.user.util.Utilities
 import dmax.dialog.SpotsDialog
 import java.lang.Exception
@@ -90,7 +90,7 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun signUp() {
-        val authFirebaseHelper = AuthFirebaseHelper()
+        val authFirebaseModel = AuthFirebaseModel()
         val normalUser = NormalUser(
                 etFirstName.text.toString(),
                 etLastName.text.toString(),
@@ -102,7 +102,7 @@ class SignUpActivity : AppCompatActivity() {
         val waitingDialog = SpotsDialog.Builder().setContext(this).build()
         waitingDialog.show()
 
-        authFirebaseHelper.signUp(normalUser, etPassword.text.toString(), object: AuthListener.SignUpListener {
+        authFirebaseModel.signUp(normalUser, etPassword.text.toString(), object: AuthListener.SignUpListener {
             override fun onCompleteListener() {
                 waitingDialog.dismiss()
                 Common.currentUser = normalUser

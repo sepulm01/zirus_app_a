@@ -1,9 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
     <string name="app_name">Zirus</string>
 
     <string name="btn_continue">Continuar</string>
 
+    <string name="choose_category">Elige una categoría</string>
     <string name="choose_location">Elegir Localización</string>
 
     <string name="confirm">Confirmar</string>

@@ -1,11 +1,11 @@
-package com.iramml.zirusapp.user.firebase
+package com.iramml.zirusapp.user.model
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.iramml.zirusapp.user.common.Common
-import com.iramml.zirusapp.user.model.firebase.NormalUser
+import com.iramml.zirusapp.user.model.schema.firebase.NormalUser
 
-class AuthFirebaseHelper {
+class AuthFirebaseModel {
     private val firebaseAuth: FirebaseAuth
     private val normalUserReference: DatabaseReference
 

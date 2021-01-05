@@ -1,7 +1,7 @@
-package com.iramml.zirusapp.user.firebase
+package com.iramml.zirusapp.user.model
 
 import com.google.firebase.database.DatabaseError
-import com.iramml.zirusapp.user.model.firebase.NormalUser
+import com.iramml.zirusapp.user.model.schema.firebase.NormalUser
 import java.lang.Exception
 
 interface AuthListener {
