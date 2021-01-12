@@ -4,6 +4,7 @@ data class Requirement (
     var id: String = "",
     var type: String = "",
     var dateTime: String = "",
+    var timeZome: String = "",
     var requirement_num: String = "",
     var lat: Double = 0.0,
     var lng: Double = 0.0,

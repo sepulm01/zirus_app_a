@@ -90,7 +90,6 @@ class NewLocationActivity : AppCompatActivity(), OnMapReadyCallback {
                 val intent = Intent(this, ChooseRequirementCategoryActivity::class.java)
                 intent.putExtra("lat", locationSelected.latitude)
                 intent.putExtra("lng", locationSelected.longitude)
-                intent.putExtra("address", locationStr)
                 startActivity(intent)
             }
 
@@ -112,7 +111,6 @@ class NewLocationActivity : AppCompatActivity(), OnMapReadyCallback {
                         response.lastLocation.latitude,
                         response.lastLocation.longitude
                 )
-                getAddressByLatLng(location)
 
                 if (isFirstCurrentLocation) {
                     btnConfirm.isEnabled = true
@@ -238,19 +236,6 @@ class NewLocationActivity : AppCompatActivity(), OnMapReadyCallback {
         rvPlaces.adapter = placesAdapter
     }
 
-    private fun getAddressByLatLng(location: LatLng) {
-        val googleAPIHelper = GoogleAPIHelper(this@NewLocationActivity)
-        googleAPIHelper.getAddressByLatLng(
-                location,
-                object : GoogleAPIsListener.GetAddressByLatLngListener {
-                    override fun onRequestResult(address: String) {
-                        locationStr = address
-                        tvAddress.text = address
-                    }
-                }
-        )
-    }
-
     private fun setLocation(location: LatLng) {
         btnConfirm.isEnabled = true
 
@@ -258,7 +243,6 @@ class NewLocationActivity : AppCompatActivity(), OnMapReadyCallback {
             locationMarker!!.remove()
 
         locationSelected = location
-        getAddressByLatLng(locationSelected)
         locationMarker = googleMap.addMarker(
                 MarkerOptions()
                         .position(location)

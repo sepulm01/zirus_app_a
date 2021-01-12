@@ -19,10 +19,6 @@ class ChooseRequirementCategoryActivity : AppCompatActivity() {
 
     private var latSelected: Double = -1.0
     private var lngSelected: Double = -1.0
-    private var address: String = ""
-    private var categoryName: String = ""
-    private var categoryIcon: String = ""
-    private var categoryID: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +30,6 @@ class ChooseRequirementCategoryActivity : AppCompatActivity() {
         if (intent.extras != null) {
             latSelected = intent.getDoubleExtra("lat", -0.1)
             lngSelected = intent.getDoubleExtra("lng", -0.1)
-            address = intent.getStringExtra("address").toString()
         } else
             finish()
     }
@@ -74,7 +69,6 @@ class ChooseRequirementCategoryActivity : AppCompatActivity() {
         val intent = Intent(this, NewRequirementActivity::class.java)
         intent.putExtra("lat", latSelected)
         intent.putExtra("lng", lngSelected)
-        intent.putExtra("address", address)
         intent.putExtra("category", Gson().toJson(requirementCategory))
         startActivity(intent)
     }

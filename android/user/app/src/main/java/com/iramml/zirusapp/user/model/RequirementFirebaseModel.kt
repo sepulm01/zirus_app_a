@@ -30,25 +30,28 @@ class RequirementFirebaseModel {
         requirementCategoryReference = firebaseDatabase.getReference(Common.RequirementCategoriesTable)
     }
 
-    fun createNormalRequirement(requirement: Requirement, requirementImg: Bitmap,
+    fun createNormalRequirement(requirement: Requirement, requirementImg: Bitmap?,
                                 createNormalRequirementListener: RequirementListener.CreateNormalRequirementListener) {
-        val imageName: String = UUID.randomUUID().toString()
-        val imageFolder: StorageReference = firebaseStorage.reference.child("requirement/images/$imageName")
+        if (requirementImg != null) {
+            val imageName: String = UUID.randomUUID().toString()
+            val imageFolder: StorageReference = firebaseStorage.reference.child("requirement/images/$imageName")
 
-        val stream = ByteArrayOutputStream()
-        requirementImg.compress(Bitmap.CompressFormat.PNG, 100, stream)
-        val byteArray: ByteArray = stream.toByteArray()
-        requirementImg.recycle()
-        imageFolder.putBytes(byteArray)
-            .addOnSuccessListener {
-                imageFolder.downloadUrl.addOnSuccessListener { uri ->
-                    requirement.details.image = uri.toString()
-                    registerNormalRequirement(requirement, createNormalRequirementListener)
-                }
-            }.addOnFailureListener {
-                createNormalRequirementListener.onUploadedImageError(it)
-            }
-
+            val stream = ByteArrayOutputStream()
+            requirementImg.compress(Bitmap.CompressFormat.PNG, 100, stream)
+            val byteArray: ByteArray = stream.toByteArray()
+            requirementImg.recycle()
+            imageFolder.putBytes(byteArray)
+                    .addOnSuccessListener {
+                        imageFolder.downloadUrl.addOnSuccessListener { uri ->
+                            requirement.details.image = uri.toString()
+                            registerNormalRequirement(requirement, createNormalRequirementListener)
+                        }
+                    }.addOnFailureListener {
+                        createNormalRequirementListener.onUploadedImageError(it)
+                    }
+        } else {
+            registerNormalRequirement(requirement, createNormalRequirementListener)
+        }
     }
 
     private fun registerNormalRequirement(requirement: Requirement,

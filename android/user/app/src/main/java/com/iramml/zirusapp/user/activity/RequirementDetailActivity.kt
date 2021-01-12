@@ -14,9 +14,11 @@ import com.iramml.zirusapp.user.model.RequirementFirebaseModel
 import com.iramml.zirusapp.user.model.RequirementListener
 import com.iramml.zirusapp.user.model.schema.firebase.Requirement
 import com.iramml.zirusapp.user.model.schema.firebase.RequirementStatusItem
+import com.squareup.picasso.Picasso
 
 class RequirementDetailActivity : AppCompatActivity() {
     private lateinit var ivBack: ImageView
+    private lateinit var ivRequirementImage: ImageView
     private lateinit var tvRequirementNumber: TextView
     private lateinit var rvRequirementDetail: RecyclerView
 
@@ -36,6 +38,7 @@ class RequirementDetailActivity : AppCompatActivity() {
 
     private fun initViews() {
         ivBack = findViewById(R.id.iv_back)
+        ivRequirementImage = findViewById(R.id.iv_requirement_image)
         tvRequirementNumber = findViewById(R.id.tv_requirement_number)
         rvRequirementDetail = findViewById(R.id.rv_requirement_status)
         rvRequirementDetail.layoutManager =
@@ -54,7 +57,14 @@ class RequirementDetailActivity : AppCompatActivity() {
         requirementFirebaseModel.getRequirementByID(requirementID, object: RequirementListener.GetRequirementListener {
             override fun onSuccess(requirementDetails: Requirement) {
                 implementRequirementStatus(requirementDetails.statusItems)
-                tvRequirementNumber.text = requirementDetails.requirement_num
+                tvRequirementNumber.text =
+                        "${getString(R.string.requirement_number)} ${requirementDetails.requirement_num}"
+                if (requirementDetails.details.image != "") {
+                    Picasso.get()
+                            .load(requirementDetails.details.image)
+                            .into(ivRequirementImage)
+                }
+
             }
 
         })
