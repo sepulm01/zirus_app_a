@@ -8,6 +8,7 @@ class Common {
         const val RequirementUserTable = "requirement_user"
         const val AllRequirementsTable = "all_requirements"
         const val RequirementCategoriesTable = "requirement_category"
+        const val NormalUserTokens = "normal_user_token"
 
         var currentUser: NormalUser? = null
     }
