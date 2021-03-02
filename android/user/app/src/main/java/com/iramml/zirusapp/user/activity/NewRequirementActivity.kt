@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.database.DatabaseError
@@ -41,7 +42,7 @@ import java.util.*
 
 class NewRequirementActivity : AppCompatActivity() {
     private lateinit var root: View
-    private lateinit var ivBack: ImageView
+    private lateinit var toolbar: Toolbar
     private lateinit var etDescription: TextInputEditText
     private lateinit var ivPhoto: ImageView
     private lateinit var btnCreate: Button
@@ -79,17 +80,16 @@ class NewRequirementActivity : AppCompatActivity() {
 
     private fun initViews() {
         root = findViewById(R.id.root)
-        ivBack = findViewById(R.id.iv_back)
+        toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        supportActionBar?.title = getString(R.string.new_requirement)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         ivPhoto = findViewById(R.id.iv_photo)
         etDescription = findViewById(R.id.et_description)
         btnCreate = findViewById(R.id.btn_create)
     }
 
     private fun initListeners() {
-        ivBack.setOnClickListener {
-            finish()
-        }
-
         ivPhoto.setOnClickListener {
             chooseImage()
         }
@@ -124,7 +124,8 @@ class NewRequirementActivity : AppCompatActivity() {
         val strDate: String = dateFormat.format(date)
 
         requirement.dateTime = strDate
-        requirement.timeZome = getTimeZone()
+        requirement.timeZone = getTimeZone()
+        requirement.status = "sent"
         val requirementStatusItem = RequirementStatusItem(
                 "${etDescription.text.toString()} - Ingresado",
                 "",

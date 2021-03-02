@@ -25,6 +25,13 @@ class RequirementsAdapter(var context: Context?, private var items: List<Require
         viewHolder?.tvTitle?.text = context!!.getString(R.string.requirement_number) + " " + item.requirement_num
         viewHolder?.tvDate?.text = item.dateTime
 
+        when (item.status) {
+            "sent" -> viewHolder?.viewStatus?.background = context!!.getDrawable(R.drawable.shape_sent_status)
+            "seen" -> viewHolder?.viewStatus?.background = context!!.getDrawable(R.drawable.shape_received_status)
+            "in_progress" -> viewHolder?.viewStatus?.background = context!!.getDrawable(R.drawable.shape_in_progress_status)
+            "done" -> viewHolder?.viewStatus?.background = context!!.getDrawable(R.drawable.shape_done_status)
+            else -> viewHolder?.viewStatus?.background = context!!.getDrawable(R.drawable.shape_done_status)
+        }
     }
 
     override fun getItemCount(): Int {

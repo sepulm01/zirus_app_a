@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.iramml.zirusapp.user.R
@@ -17,7 +18,6 @@ import com.iramml.zirusapp.user.model.schema.firebase.RequirementStatusItem
 import com.squareup.picasso.Picasso
 
 class RequirementDetailActivity : AppCompatActivity() {
-    private lateinit var ivBack: ImageView
     private lateinit var ivRequirementImage: ImageView
     private lateinit var tvRequirementNumber: TextView
     private lateinit var rvRequirementDetail: RecyclerView
@@ -28,28 +28,25 @@ class RequirementDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_requirement_detail)
         initViews()
-        initListeners()
         if (intent.extras != null) {
             requirementID = intent.getStringExtra("requirement_id")!!
-        } else
+        } else {
             finish()
+        }
         getRequirementDetails()
     }
 
     private fun initViews() {
-        ivBack = findViewById(R.id.iv_back)
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        supportActionBar?.title = getString(R.string.requirement_detail)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         ivRequirementImage = findViewById(R.id.iv_requirement_image)
         tvRequirementNumber = findViewById(R.id.tv_requirement_number)
         rvRequirementDetail = findViewById(R.id.rv_requirement_status)
         rvRequirementDetail.layoutManager =
                 LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         rvRequirementDetail.isNestedScrollingEnabled = true
-    }
-
-    private fun initListeners() {
-        ivBack.setOnClickListener {
-            finish()
-        }
     }
 
     private fun getRequirementDetails() {

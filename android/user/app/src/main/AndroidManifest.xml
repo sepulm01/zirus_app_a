@@ -17,18 +17,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ZirusUser">
-        <activity android:name=".activity.ChooseRequirementCategoryActivity"></activity>
+        <activity
+            android:name=".activity.ChooseRequirementCategoryActivity"
+            android:parentActivityName=".activity.NewLocationActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.MyRequirementsActivity"
+            android:parentActivityName=".activity.HomeActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.SOSSentActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.SOSActivity"
+            android:parentActivityName=".activity.HomeActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.RequirementDetailActivity"
+            android:parentActivityName=".activity.MyRequirementsActivity"
             android:screenOrientation="portrait" />
 
         <meta-data
@@ -41,6 +47,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.NewRequirementActivity"
+            android:parentActivityName=".activity.NewLocationActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.HomeActivity"
@@ -60,6 +67,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <service
             android:name=".notifications.FCMService"
             android:exported="false">

@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
+import androidx.appcompat.widget.Toolbar
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.database.DatabaseError
@@ -32,7 +33,7 @@ import java.util.*
 
 class SOSActivity : AppCompatActivity() {
     private lateinit var root: View
-    private lateinit var ivBack: ImageView
+    private lateinit var toolbar: Toolbar
     private lateinit var btnConfirm: Button
 
     private lateinit var locationUtil: LocationUtil
@@ -55,15 +56,14 @@ class SOSActivity : AppCompatActivity() {
 
     private fun initViews() {
         root = findViewById(R.id.root)
-        ivBack = findViewById(R.id.iv_back)
+        toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        supportActionBar?.title = getString(R.string.sos)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         btnConfirm = findViewById(R.id.btn_confirm)
     }
 
     private fun initListeners() {
-        ivBack.setOnClickListener {
-            finish()
-        }
-
         btnConfirm.setOnClickListener {
             validateData()
         }
@@ -115,7 +115,8 @@ class SOSActivity : AppCompatActivity() {
 
         val currentDateTime = getCurrentDateTime()
         requirement.dateTime = currentDateTime
-        requirement.timeZome = getTimeZone()
+        requirement.timeZone = getTimeZone()
+        requirement.status = "sent"
         val requirementStatusItem = RequirementStatusItem(
                 "Ingresado",
                 "",

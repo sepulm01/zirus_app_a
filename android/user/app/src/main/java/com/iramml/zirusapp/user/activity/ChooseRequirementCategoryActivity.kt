@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
@@ -15,6 +16,7 @@ import com.iramml.zirusapp.user.model.RequirementListener
 import com.iramml.zirusapp.user.model.schema.firebase.RequirementCategory
 
 class ChooseRequirementCategoryActivity : AppCompatActivity() {
+    private lateinit var toolbar: Toolbar
     private lateinit var rvRequirementCategory: RecyclerView
 
     private var latSelected: Double = -1.0
@@ -35,6 +37,10 @@ class ChooseRequirementCategoryActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
+        toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        supportActionBar?.title = getString(R.string.choose_category)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         rvRequirementCategory = findViewById(R.id.rv_requirement_categories)
         rvRequirementCategory.isNestedScrollingEnabled = true
         rvRequirementCategory.layoutManager =
