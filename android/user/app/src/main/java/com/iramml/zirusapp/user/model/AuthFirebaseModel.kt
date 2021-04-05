@@ -8,6 +8,7 @@ import com.iramml.zirusapp.user.model.schema.firebase.NormalUser
 class AuthFirebaseModel {
     private val firebaseAuth: FirebaseAuth
     private val normalUserReference: DatabaseReference
+    private val userTokenReference: DatabaseReference
 
     companion object {
         fun logout() {
@@ -21,6 +22,7 @@ class AuthFirebaseModel {
         firebaseAuth = FirebaseAuth.getInstance()
 
         normalUserReference = firebaseDatabase.getReference(Common.NormalUserInfoTable)
+        userTokenReference = firebaseDatabase.getReference(Common.NormalUserTokens)
     }
 
     fun signIn(email: String, password: String, signInListener: AuthListener.SignInListener) {
@@ -44,7 +46,6 @@ class AuthFirebaseModel {
 
     private fun insertSignUpData(userDriver: NormalUser, signUpListener: AuthListener.SignUpListener) {
         val userID = FirebaseAuth.getInstance().currentUser?.uid
-
 
         normalUserReference.child(userID!!).setValue(userDriver)
                 .addOnSuccessListener {
@@ -86,7 +87,12 @@ class AuthFirebaseModel {
         })
     }
 
-
+    fun saveFirebaseToken(firebaseToken: String) {
+        val userID = FirebaseAuth.getInstance().currentUser?.uid
+        if (userID != null) {
+            userTokenReference.child(userID).setValue(firebaseToken)
+        }
+    }
 
 }
 

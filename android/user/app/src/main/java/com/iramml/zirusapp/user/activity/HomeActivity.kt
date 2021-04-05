@@ -3,9 +3,12 @@ package com.iramml.zirusapp.user.activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 import com.iramml.zirusapp.user.R
 import com.iramml.zirusapp.user.common.Common
 import com.iramml.zirusapp.user.model.AuthFirebaseModel
@@ -22,6 +25,7 @@ class HomeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_home)
         initViews()
         initListeners()
+        getFirebaseToken()
         tvWelcome.text = "${getString(R.string.welcome_comma)} ${Common.currentUser?.firstName}"
     }
 
@@ -51,5 +55,17 @@ class HomeActivity : AppCompatActivity() {
         btnSOS.setOnClickListener {
             startActivity(Intent(this@HomeActivity, SOSActivity::class.java))
         }
+    }
+
+    private fun getFirebaseToken() {
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                return@OnCompleteListener
+            }
+
+            val token = task.result
+            val authFirebaseModel: AuthFirebaseModel = AuthFirebaseModel()
+            authFirebaseModel.saveFirebaseToken(token)
+        })
     }
 }

@@ -32,7 +32,6 @@ class Utilities {
         }
 
         fun hideKeypad(context: Context, view: View?) {
-            // Check if no view has focus:
             if (view != null) {
                 val imm: InputMethodManager =
                     context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -52,11 +51,15 @@ class Utilities {
             imm.hideSoftInputFromWindow(view.windowToken, 0)
         }
 
-        fun isAfterToday(year: Int, month: Int, day: Int): Boolean {
-            val today: Calendar = Calendar.getInstance()
-            val myDate: Calendar = Calendar.getInstance()
-            myDate.set(year, month, day)
-            return !myDate.before(today)
+        fun <T> getPageOfList(sourceList: List<T>?, page: Int, pageSize: Int): List<T>? {
+            require(!(pageSize <= 0 || page <= 0)) { "invalid page size: $pageSize" }
+
+            val fromIndex = (page - 1) * pageSize
+            return if (sourceList == null || sourceList.size <= fromIndex) {
+                Collections.emptyList()
+            } else {
+                sourceList.subList(fromIndex, Math.min(fromIndex + pageSize, sourceList.size))
+            }
         }
     }
 }

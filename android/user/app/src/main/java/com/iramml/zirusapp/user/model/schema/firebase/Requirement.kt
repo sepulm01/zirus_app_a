@@ -13,6 +13,7 @@ data class Requirement (
     var category: RequirementCategory = RequirementCategory(),
     var user: NormalUser = NormalUser(),
     var statusItems: ArrayList<RequirementStatusItem> = ArrayList(),
+    var userId: String = "",
 )
 
 

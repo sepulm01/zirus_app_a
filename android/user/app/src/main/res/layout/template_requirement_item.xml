@@ -16,31 +16,34 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_date"
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:fontFamily="@font/quicksand"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toStartOf="@+id/view_status"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="8dp"
-            android:fontFamily="@font/quicksand"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textSize="14sp"
+            android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/view_status"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_date" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/tv_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/quicksand"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/quicksand"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textSize="14sp" />
+        </LinearLayout>
 
         <View
             android:id="@+id/view_status"

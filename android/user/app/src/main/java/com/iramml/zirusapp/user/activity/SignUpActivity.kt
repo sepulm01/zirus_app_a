@@ -61,6 +61,7 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun validateSignUpData() {
         Utilities.hideKeyboard(this)
+        Utilities.hideKeypad(this, root)
         if (TextUtils.isEmpty(etFirstName.text)) {
             ShowMessage.messageForm(root, this, FormMessages.FILL_FIRST_NAME)
             return

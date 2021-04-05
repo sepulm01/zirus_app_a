@@ -53,6 +53,7 @@ class SignInActivity : AppCompatActivity() {
 
     private fun validateSignInData() {
         Utilities.hideKeyboard(this)
+        Utilities.hideKeypad(this, root)
         if (TextUtils.isEmpty(etEmail.text)) {
             ShowMessage.messageForm(root, this, FormMessages.FILL_EMAIL)
             return
