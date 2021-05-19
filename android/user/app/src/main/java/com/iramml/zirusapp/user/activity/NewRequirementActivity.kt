@@ -119,12 +119,10 @@ class NewRequirementActivity : AppCompatActivity() {
         requirement.details.address = locationAddress
         requirement.category = requirementCategory
 
-        val date: Date = Calendar.getInstance().time
-        val dateFormat: DateFormat = SimpleDateFormat("yyyy-mm-dd hh:mm:ss")
-        val strDate: String = dateFormat.format(date)
+        val strDate = Utilities.getCurrentDateTime()
 
         requirement.dateTime = strDate
-        requirement.timeZone = getTimeZone()
+        requirement.timeZone = Utilities.getTimeZone()
         requirement.status = "sent"
         val requirementStatusItem = RequirementStatusItem(
                 "${etDescription.text.toString()} - Ingresado",
@@ -243,13 +241,5 @@ class NewRequirementActivity : AppCompatActivity() {
         )
     }
 
-    private fun getTimeZone(): String {
-        val tz = TimeZone.getDefault()
-        val gmt1 = TimeZone.getTimeZone(tz.id)
-                .getDisplayName(false, TimeZone.SHORT)
-        val gmt2 = TimeZone.getTimeZone(tz.id)
-                .getDisplayName(false, TimeZone.LONG)
 
-        return "$gmt1\t$gmt2"
-    }
 }

@@ -113,9 +113,9 @@ class SOSActivity : AppCompatActivity() {
         requirement.requirement_num = "sos" + createRandomNumber(8)
         requirement.details.address = address
 
-        val currentDateTime = getCurrentDateTime()
+        val currentDateTime = Utilities.getCurrentDateTime()
         requirement.dateTime = currentDateTime
-        requirement.timeZone = getTimeZone()
+        requirement.timeZone = Utilities.getTimeZone()
         requirement.status = "sent"
         val requirementStatusItem = RequirementStatusItem(
                 "Ingresado",
@@ -158,14 +158,6 @@ class SOSActivity : AppCompatActivity() {
         )
     }
 
-    @SuppressLint("SimpleDateFormat")
-    private fun getCurrentDateTime(): String {
-        val date: Date = Calendar.getInstance().time
-        val dateFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
-        val dateStr: String = dateFormat.format(date)
-        return dateStr
-    }
-
     private fun createRandomNumber(len: Long): String {
         //check(len <= 18) { "To many digits" }
         val tLen = Math.pow(10.0, (len - 1).toDouble()).toLong() * 9
@@ -173,15 +165,5 @@ class SOSActivity : AppCompatActivity() {
         val tVal = number.toString() + ""
         //check(tVal.length.toLong() == len) { "The random number '$tVal' is not '$len' digits" }
         return tVal
-    }
-
-    private fun getTimeZone(): String {
-        val tz = TimeZone.getDefault()
-        val gmt1 = TimeZone.getTimeZone(tz.id)
-                .getDisplayName(false, TimeZone.SHORT)
-        val gmt2 = TimeZone.getTimeZone(tz.id)
-                .getDisplayName(false, TimeZone.LONG)
-
-        return "$gmt1\t$gmt2"
     }
 }
